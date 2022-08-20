@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonalityTestActivity"
+    android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/quizProgress"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:progressDrawable="@drawable/progress_bg"/>
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="20dp"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Question1 is here"
+            android:textColor="#878585"
+            android:textSize="20dp"
+            android:layout_margin="10dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="20dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/sDisagreeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#AE4BBF"
+                android:text="Strongly Disagree"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold|normal" />
+            <Button
+                android:id="@+id/disagreeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#DE7CEF"
+                android:text="Disagree"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold|normal" />
+            <Button
+                android:id="@+id/neutralBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#A6A2A6"
+                android:text="Neutral"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold|normal" />
+            <Button
+                android:id="@+id/agreeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7DCA80"
+                android:text="Agree"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold|normal" />
+            <Button
+                android:id="@+id/sAgreeeBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4CAF50"
+                android:text="Strongly Agree"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold|normal" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp">
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="Previous"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:layout_marginRight="5dp"
+            android:textStyle="bold|normal" />
+        <Button
+            android:id="@+id/prevBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textStyle="bold|normal" />
+    </LinearLayout>
+</LinearLayout>

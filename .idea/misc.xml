@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/background_forms.xml" value="0.2775" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/btn_strongly_disagree.xml" value="0.2825" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/button.xml" value="0.2775" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/flow_button.xml" value="0.1985" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/progress_bg.xml" value="0.2825" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_add_post.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_create_profile.xml" value="0.3578125" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_interests.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_main.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_personality_test.xml" value="0.3578125" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_signup.xml" value="0.3578125" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile1.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile2.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile_1.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile_2.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_home.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_notification.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_profile.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_search.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_signup1.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/menu/bottom_navigation.xml" value="0.371875" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
