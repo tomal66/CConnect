@@ -104,7 +104,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp">
         <Button
-            android:id="@+id/nextBtn"
+            android:id="@+id/prevBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
@@ -115,7 +115,7 @@
             android:layout_marginRight="5dp"
             android:textStyle="bold|normal" />
         <Button
-            android:id="@+id/prevBtn"
+            android:id="@+id/nextBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button"
