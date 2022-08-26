@@ -1,7 +1,9 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.tomal66.cconnect.Fragments.CreateProfileFragment1
+import com.tomal66.cconnect.R
 
 class CreateProfileActivity : AppCompatActivity() {
 

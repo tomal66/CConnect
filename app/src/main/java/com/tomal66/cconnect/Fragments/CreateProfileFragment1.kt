@@ -1,4 +1,4 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.tomal66.cconnect.R
 
 class CreateProfileFragment1 : Fragment() {
 

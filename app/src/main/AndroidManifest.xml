@@ -14,22 +14,22 @@
         android:theme="@style/Theme.CConnect"
         tools:targetApi="31">
         <activity
-            android:name=".AddPostActivity"
+            android:name=".Activities.AddPostActivity"
             android:exported="false" />
         <activity
-            android:name=".InterestsActivity"
+            android:name=".Activities.InterestsActivity"
             android:exported="false" />
         <activity
-            android:name=".PersonalityTestActivity"
+            android:name=".Activities.PersonalityTestActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateProfileActivity"
+            android:name=".Activities.CreateProfileActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".Activities.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
         </activity>
     </application>

@@ -1,9 +1,10 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.tomal66.cconnect.R
 
 class InterestsActivity : AppCompatActivity() {
     private lateinit var doneBtn:Button

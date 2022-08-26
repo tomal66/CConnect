@@ -1,8 +1,13 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.tomal66.cconnect.*
+import com.tomal66.cconnect.Fragments.HomeFragment
+import com.tomal66.cconnect.Fragments.NotificationFragment
+import com.tomal66.cconnect.Fragments.ProfileFragment
+import com.tomal66.cconnect.Fragments.SearchFragment
 import com.tomal66.cconnect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

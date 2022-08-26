@@ -1,4 +1,4 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.tomal66.cconnect.Activities.PersonalityTestActivity
+import com.tomal66.cconnect.R
 
 class CreateProfileFragment2 : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import com.tomal66.cconnect.R
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBtn : Button

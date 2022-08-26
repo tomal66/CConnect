@@ -1,7 +1,8 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.tomal66.cconnect.R
 
 class AddPostActivity : AppCompatActivity() {
 

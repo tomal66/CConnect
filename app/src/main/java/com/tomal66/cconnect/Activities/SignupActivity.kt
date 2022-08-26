@@ -1,10 +1,11 @@
-package com.tomal66.cconnect
+package com.tomal66.cconnect.Activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.tomal66.cconnect.R
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var nextBtn : Button
