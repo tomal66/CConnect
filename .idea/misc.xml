@@ -7,7 +7,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/drawable/hellow.xml" value="0.157" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_create_profile.xml" value="0.2" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable-anydpi/ic_inbox.xml" value="0.2685" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/post_item.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/background_forms.xml" value="0.2775" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/btn_strongly_disagree.xml" value="0.2825" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/button.xml" value="0.2775" />
@@ -29,7 +29,6 @@
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_profile.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_search.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_signup1.xml" value="0.371875" />
-        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/post_item.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/menu/bottom_navigation.xml" value="0.371875" />
       </map>
     </option>
