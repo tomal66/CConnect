@@ -28,11 +28,13 @@
                     android:src="@drawable/text_logo" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/messages"
+                    android:layout_width="25dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_inbox"
+
 
                     />
 
