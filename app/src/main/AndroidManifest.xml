@@ -14,17 +14,23 @@
         android:theme="@style/Theme.CConnect"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.AddPostActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.InterestsActivity"
             android:exported="false" />
         <activity
+            android:name=".Activities.EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activities.PersonalityTestActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.CreateProfileActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Activities.SignupActivity"
             android:exported="false" />
@@ -39,8 +45,7 @@
         </activity>
         <activity
             android:name=".Activities.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
