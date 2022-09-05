@@ -42,4 +42,10 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragment_container,fragment)
         fragmentTransaction.commit()
     }
+
+    override fun onStart() {
+        super.onStart()
+
+    }
+
 }
