@@ -49,6 +49,7 @@ dependencies {
     //implementation "com.wefika:flowlayout:0.4.1"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     //implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
