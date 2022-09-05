@@ -44,12 +44,12 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         val user = auth.currentUser
-                        updateUI(user)
+                        updateUI()
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(baseContext, "Authentication failed.",
                             Toast.LENGTH_SHORT).show()
-                        updateUI(null)
+                        updateUI()
                     }
                 }
         }
@@ -64,10 +64,22 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun updateUI() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            updateUI()
+        }
+    }
+
+
+
+
 
     private fun sendEmail(recipient: String, subject: String, message: String) {
         /*ACTION_SEND action to launch an email client installed on your Android device.*/
