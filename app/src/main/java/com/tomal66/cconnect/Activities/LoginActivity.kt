@@ -5,26 +5,53 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.tomal66.cconnect.R
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginBtn : Button
     private lateinit var signUpBtn : TextView
     private lateinit var reportBtn : TextView
+    private lateinit var editUsername : EditText
+    private lateinit var editPassword : EditText
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Initialize Firebase Auth
+        auth = Firebase.auth
         loginBtn = findViewById(R.id.loginBtn)
         signUpBtn = findViewById(R.id.signUpBtn)
         reportBtn = findViewById(R.id.reportBtn)
+        editUsername = findViewById(R.id.editUsername)
+        editPassword = findViewById(R.id.editPassword)
 
         loginBtn.setOnClickListener(){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+
+            val sEmail = editUsername.text.toString().trim()
+            val sPassword = editPassword.text.toString().trim()
+
+            auth.signInWithEmailAndPassword(sEmail, sPassword)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                        updateUI(null)
+                    }
+                }
         }
 
         signUpBtn.setOnClickListener(){
@@ -35,6 +62,11 @@ class LoginActivity : AppCompatActivity() {
         reportBtn.setOnClickListener(){
             sendEmail("intesar3006@gmail.com", "Application bug found by user","")
         }
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun sendEmail(recipient: String, subject: String, message: String) {

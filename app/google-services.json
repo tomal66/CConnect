@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "427770278527",
+    "project_id": "cconnect-2905d",
+    "storage_bucket": "cconnect-2905d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427770278527:android:378dd8d4d72205f18c454a",
+        "android_client_info": {
+          "package_name": "com.tomal66.cconnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427770278527-d3e12lede3k5653epbsb8kkl64liqmms.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCosUuQQmysd7f0i14OM65ijD9BCG5Z6oE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427770278527-d3e12lede3k5653epbsb8kkl64liqmms.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
