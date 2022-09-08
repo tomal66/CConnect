@@ -1,5 +1,6 @@
 package com.tomal66.cconnect.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.tomal66.cconnect.Activities.LoginActivity
 import com.tomal66.cconnect.R
 
 class OptionsFragment : Fragment() {
@@ -41,6 +45,13 @@ class OptionsFragment : Fragment() {
             val fragment = ProfileFragment()
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.fragment_container,fragment)?.commit()
+        }
+
+        logout.setOnClickListener(){
+            Firebase.auth.signOut()
+
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
 
