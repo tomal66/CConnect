@@ -11,7 +11,9 @@
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/background_forms.xml" value="0.2775" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/btn_strongly_disagree.xml" value="0.2825" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/button.xml" value="0.2775" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/dialog_bg.xml" value="0.2685" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/flow_button.xml" value="0.1985" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.2685" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/progress_bg.xml" value="0.2825" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_add_post.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_chat.xml" value="0.371875" />
@@ -24,16 +26,20 @@
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_personality_test.xml" value="0.3578125" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_signup.xml" value="0.3578125" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_splash_screen.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile1.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile2.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile_1.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile_2.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_home.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_notification.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_options.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_profile.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_search.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_signup1.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/menu/bottom_navigation.xml" value="0.371875" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/menu/nav_menu.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/menu/right_navigation.xml" value="0.371875" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1995" />
       </map>
     </option>

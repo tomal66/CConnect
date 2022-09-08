@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <item android:title="Account">
+        <menu>
+            <item
+                android:id="@+id/nav_account_preferences"
+                android:icon="@drawable/ic_account_preferences"
+                android:title="Account Preferences"/>
+            <item
+                android:id="@+id/nav_security"
+                android:icon="@drawable/ic_security"
+                android:title="Security"/>
+            <item
+                android:id="@+id/nav_visibility"
+                android:icon = "@drawable/ic_visibility"
+                android:title="Visibility"/>
+            <item
+                android:id="@+id/nav_communications"
+                android:icon = "@drawable/ic_mail"
+                android:title="Communications"/>
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon = "@drawable/ic_privacy"
+                android:title="Privacy"/>
+        </menu>
+    </item>
+
+
+
+    <item android:title="Support">
+        <menu>
+            <item
+                android:id="@+id/nav_report"
+                android:icon = "@drawable/ic_report"
+                android:title="Report a Problem"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Profile">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon = "@drawable/ic_logout"
+                android:title="Log Out"/>
+        </menu>
+    </item>
+
+
+
+</menu>
