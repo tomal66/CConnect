@@ -10,11 +10,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bottom"
-            android:id="@+id/fragment_container"/>
+            android:layout_above="@id/bottom" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

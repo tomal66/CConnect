@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.tomal66.cconnect"
-        minSdk 21
+        minSdk 22
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -33,6 +33,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
@@ -60,4 +61,7 @@ dependencies {
     //butterknife
     implementation 'com.jakewharton:butterknife:10.2.3'
     kapt 'com.jakewharton:butterknife-compiler:10.2.3'
+
+    //bottomsheet
+    implementation 'com.github.mazenrashed:BottomSheetMenu:1.1.0'
 }

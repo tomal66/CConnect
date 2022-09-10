@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomsheet_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings"/>
+    <item
+        android:id="@+id/bottomsheet_report"
+        android:icon="@drawable/ic_report"
+        android:title="Report a Problem"/>
+    <item
+        android:id="@+id/bottomsheet_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Log Out"/>
+</menu>

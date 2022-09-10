@@ -37,11 +37,14 @@ class ProfileFragment : Fragment() {
 
         optionsBtn = view.findViewById(R.id.options)
         optionsBtn.setOnClickListener(){
+            (activity as MainActivity).showBottomSheet()
+        }
+        /*optionsBtn.setOnClickListener(){
             val fragment = OptionsFragment()
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.fragment_container,fragment)?.commit()
 
-        }
+        }*/
 
         return view
     }

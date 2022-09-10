@@ -80,8 +80,10 @@ class LoginActivity : AppCompatActivity() {
 
 
 
+    public fun report(){
 
-    private fun sendEmail(recipient: String, subject: String, message: String) {
+    }
+    fun sendEmail(recipient: String, subject: String, message: String) {
         /*ACTION_SEND action to launch an email client installed on your Android device.*/
         val mIntent = Intent(Intent.ACTION_SEND)
         /*To send an email you need to specify mailto: as URI using setData() method
