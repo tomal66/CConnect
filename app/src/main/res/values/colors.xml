@@ -9,4 +9,7 @@
     <color name="logo">#2196F3</color>
     <color name="button">#2196F3</color>
     <color name="form">#EAE9E9</color>
+
+    <color name="bottomnav_selected">#2196F3</color>
+    <color name="bottomnav_unselected">#FF000000</color>
 </resources>
