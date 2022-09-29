@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     tools:context=".Fragments.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -27,20 +29,23 @@
                     android:textColor="#000000"
                     android:textSize="10sp"
                     android:textStyle="bold" />
+
                 <ImageView
+                    android:id="@+id/options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/options"
-                    android:src="@drawable/ic_options"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    />
+                    android:src="@drawable/ic_options" />
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-    
+
+
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -210,5 +215,4 @@
 
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>

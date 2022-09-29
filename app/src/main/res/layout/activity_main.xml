@@ -6,25 +6,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activities.MainActivity">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom"
-        android:id="@+id/fragment_container"/>
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bottom_navigation"
-            app:itemIconTint="#000000"
-            app:labelVisibilityMode="unlabeled"
-            android:background="?android:windowBackground"
-            app:menu="@menu/bottom_navigation"/>
-    </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom" />
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:id="@+id/bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content">
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bottom_navigation"
+                app:itemIconTint="@drawable/bottomnav_icon_color"
+                app:labelVisibilityMode="unlabeled"
+                android:background="?android:windowBackground"
+                app:menu="@menu/bottom_navigation"/>
+        </com.google.android.material.appbar.AppBarLayout>
+    </RelativeLayout>
+
 
 </RelativeLayout>
