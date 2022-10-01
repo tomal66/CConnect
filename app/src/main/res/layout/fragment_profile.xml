@@ -36,7 +36,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_options" />
+                    android:src="@drawable/ic_options"
+                    android:foreground="?android:attr/selectableItemBackground"/>
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -151,6 +152,7 @@
                         android:background="@drawable/button"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -191,14 +193,16 @@
                     android:layout_weight="1"
                     android:id="@+id/photos"
                     android:src="@drawable/ic_grid"
-                    style="?android:buttonBarButtonStyle"/>
+                    style="?android:buttonBarButtonStyle"
+                    android:foreground="?android:attr/selectableItemBackground"/>
                 <ImageButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/saved_photos"
                     android:src="@drawable/ic_save"
-                    style="?android:buttonBarButtonStyle"/>
+                    style="?android:buttonBarButtonStyle"
+                    android:foreground="?android:attr/selectableItemBackground"/>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
