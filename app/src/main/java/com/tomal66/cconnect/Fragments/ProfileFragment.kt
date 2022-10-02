@@ -13,6 +13,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.google.android.material.navigation.NavigationView
 import com.tomal66.cconnect.Activities.EditProfileActivity
 import com.tomal66.cconnect.Activities.MainActivity
@@ -20,7 +22,8 @@ import com.tomal66.cconnect.R
 
 
 class ProfileFragment : Fragment() {
-    private lateinit var optionsBtn : ImageView
+    @BindView(R.id.options)
+    lateinit var optionsBtn : ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,10 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
-        optionsBtn = view.findViewById(R.id.options)
+        //optionsBtn = view.findViewById(R.id.options)
+
+        ButterKnife.bind(this,view)
+
         optionsBtn.setOnClickListener(){
             (activity as MainActivity).showBottomSheet()
         }
