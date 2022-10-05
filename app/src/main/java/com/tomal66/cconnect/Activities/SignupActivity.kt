@@ -38,7 +38,7 @@ class SignupActivity : AppCompatActivity() {
 
         nextBtn.setOnClickListener(){
 
-            if(editPassword.text.toString()==editConfirmPassword.text.toString())
+            /*if(editPassword.text.toString()==editConfirmPassword.text.toString())
             {
                 val sEmail = editUsername.text.toString().trim()
                 val sPassword = editPassword.text.toString().trim()
@@ -60,12 +60,12 @@ class SignupActivity : AppCompatActivity() {
             else {
                 Toast.makeText(baseContext, "Passwords don't match.",
                     Toast.LENGTH_SHORT).show()
-            }
+            }*/
 
 
 
-            /*val intent = Intent(this, CreateProfileActivity::class.java)
-            startActivity(intent)*/
+            val intent = Intent(this, CreateProfileActivity::class.java)
+            startActivity(intent)
         }
         signInBtn.setOnClickListener(){
             val intent = Intent(this, LoginActivity::class.java)
