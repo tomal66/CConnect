@@ -34,6 +34,9 @@ class ProfileFragment : Fragment() {
     @BindView(R.id.options)
     lateinit var optionsBtn : ImageView
 
+    @BindView(R.id.username)
+    lateinit var username : TextView
+
     @BindView(R.id.image_profile)
     lateinit var profileImage : ImageView
 
@@ -104,6 +107,7 @@ class ProfileFragment : Fragment() {
             usersRef.child(currentUserID).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     user = snapshot.getValue(User::class.java)!!
+                    username.setText(user.username)
                     fullname.setText(user.firstname + " " + user.lastname)
                     bio.setText(user.bio)
                     posts.setText(user.posts.toString())
