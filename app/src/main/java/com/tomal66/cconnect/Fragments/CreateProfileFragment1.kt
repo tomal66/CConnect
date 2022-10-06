@@ -1,6 +1,8 @@
 package com.tomal66.cconnect.Fragments
 
+import android.app.usage.ExternalStorageStats
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -15,6 +17,8 @@ import butterknife.ButterKnife
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Activities.CreateProfileActivity
 import com.tomal66.cconnect.Activities.PersonalityTestActivity
 import com.tomal66.cconnect.Model.User
@@ -48,6 +52,9 @@ class CreateProfileFragment1 : Fragment() {
 
     @BindView(R.id.editCountry)
     lateinit var editCountry : EditText
+
+    private lateinit var storageReference: StorageReference
+    private lateinit var imageUri : Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,7 +98,8 @@ class CreateProfileFragment1 : Fragment() {
             TextUtils.isEmpty(country) -> Toast.makeText(activity, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
 
             else -> {
-                val user = User(username, firstname, lastname, age, gender, institution, department, city, country)
+                val bio : String = "add me im blok"
+                val user = User(username, firstname, lastname, age, gender, institution, department, city, country, bio)
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()
@@ -106,31 +114,33 @@ class CreateProfileFragment1 : Fragment() {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val usersRef: DatabaseReference = FirebaseDatabase.getInstance("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").reference.child("Users")
 
-        val userMap = HashMap<String, Any>()
-        userMap["uid"] = currentUserID
-        userMap["username"] = user.username.toString()
-        userMap["firstname"] = user.firstname.toString()
-        userMap["lastname"] = user.lastname.toString()
-        userMap["age"] = user.age.toString()
-        userMap["gender"] = user.gender.toString()
-        userMap["institution"] = user.institution.toString()
-        userMap["department"] = user.department.toString()
-        userMap["country"] = user.country.toString()
-        userMap["bio"] = "New Account"
-        userMap["image"] = "https://firebasestorage.googleapis.com/v0/b/cconnect-2905d.appspot.com/o/Defaults%2Fuser.jpg?alt=media&token=988f1e85-a303-459b-aaca-11db3e6017a7"
+        usersRef.child(currentUserID).setValue(user).addOnCompleteListener {
 
-        usersRef.child(currentUserID).setValue(userMap)
-            .addOnCompleteListener { task ->
-                if(task.isSuccessful)
-                {
-                    val intent = Intent(activity, PersonalityTestActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    Toast.makeText(activity,"Error", Toast.LENGTH_SHORT).show()
-                }
+            if(it.isSuccessful)
+            {
+                addProfileImage()
+                val intent = Intent(activity, PersonalityTestActivity::class.java)
+                startActivity(intent)
             }
+            else
+            {
+                Toast.makeText(activity, "Failed to store data",Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+
+    }
+
+    private fun addProfileImage() {
+
+        imageUri = Uri.parse("android.resource://${activity?.packageName}/${R.drawable.default_user}")
+        storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
+        storageReference.putFile(imageUri).addOnSuccessListener {
+
+        }.addOnFailureListener {
+            Toast.makeText(activity, "Failed to upload image",Toast.LENGTH_SHORT).show()
+        }
     }
 
 }
