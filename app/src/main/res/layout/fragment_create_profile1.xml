@@ -16,148 +16,174 @@
         app:cardElevation="20dp"
         app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="match_parent" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Account Information"
-                android:textSize="28dp"
-                android:textColor="@color/button"
-                android:layout_marginBottom="28dp"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-            <EditText
-                android:id="@+id/editFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="First Name"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-            <EditText
-                android:id="@+id/editLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="Last Name"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-            <EditText
-                android:id="@+id/editAge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="Age"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="28dp"
+                    android:text="Account Information"
+                    android:textColor="@color/button"
+                    android:textSize="28dp" />
+
+                <EditText
+                    android:id="@+id/editUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="First Name"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
 
 
 
-            <Spinner
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:entries="@array/gender"
-                android:padding="10dp"
-                android:scrollbarSize="15dp" />
+                <EditText
+                    android:id="@+id/editLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Last Name"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
 
-            <EditText
-                android:id="@+id/editInstitution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="Institution"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-            <EditText
-                android:id="@+id/editDepartment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="Department"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-            <EditText
-                android:id="@+id/editCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="City"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-            <EditText
-                android:id="@+id/editCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/background_forms"
-                android:ems="1"
-                android:hint="Country"
-                android:inputType="text"
-                android:padding="10dp"
-                android:textColor="#1c1c1c"
-                android:textColorHint="#65000000"
-                android:textSize="15sp"
-                android:textStyle="normal" />
+                <EditText
+                    android:id="@+id/editAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Age"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
 
 
-            <Button
-                android:id="@+id/nextBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button"
-                android:text="Next"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
+                <Spinner
+                    android:id="@+id/gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:entries="@array/gender"
+                    android:padding="10dp"
+                    android:scrollbarSize="15dp" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/editInstitution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Institution"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Department"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="City"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/background_forms"
+                    android:ems="1"
+                    android:hint="Country"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#1c1c1c"
+                    android:textColorHint="#65000000"
+                    android:textSize="15sp"
+                    android:textStyle="normal" />
+
+
+                <Button
+                    android:id="@+id/nextBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:text="Next"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="bold|normal" />
+
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.cardview.widget.CardView>
 

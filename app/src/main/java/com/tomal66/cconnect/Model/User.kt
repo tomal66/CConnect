@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Model
 
 class User {
+    var username : String? = null
     var firstname : String? = null
     var lastname : String? = null
     var age : String? = null
@@ -11,9 +12,10 @@ class User {
     var country : String? = null
     var bio : String? = null
 
-    constructor(firstname: String, lastname: String, age: String, gender: String,
+    constructor(username: String, firstname: String, lastname: String, age: String, gender: String,
                 institution: String, department: String, city: String, country: String)
     {
+        this.username = username
         this.firstname = firstname
         this.lastname = lastname
         this.age = age
