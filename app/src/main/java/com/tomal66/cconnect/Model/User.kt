@@ -9,7 +9,8 @@ data class User(var username : String? = null,
                 var department : String? = null,
                 var city : String? = null,
                 var country : String? = null,
-                var bio : String? = null) {
+                var bio : String? = null,
+                var uid : String? = null) {
 
     var posts : Int = 0
     var followers : Int = 0

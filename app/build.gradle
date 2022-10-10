@@ -67,4 +67,6 @@ dependencies {
 
     //bottomsheet
     implementation 'com.github.mazenrashed:BottomSheetMenu:1.1.0'
+
+    implementation 'com.squareup.picasso:picasso:2.8'
 }
