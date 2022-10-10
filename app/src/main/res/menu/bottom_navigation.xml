@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_search"
         android:title=""/>
     <item
-        android:id="@+id/nav_add"
+        android:id="@+id/addPostActivity"
         android:icon="@drawable/ic_add"
         android:title=""/>
     <item

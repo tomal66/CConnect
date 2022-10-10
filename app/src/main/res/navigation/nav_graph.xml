@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_homeFragment_to_notificationFragment2"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addPostActivity"
+            app:destination="@id/addPostActivity" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -29,10 +32,24 @@
         android:id="@+id/profileFragment"
         android:name="com.tomal66.cconnect.Fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.tomal66.cconnect.Fragments.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.tomal66.cconnect.Fragments.OptionsFragment"
+        android:label="fragment_options"
+        tools:layout="@layout/fragment_options" />
+    <activity
+        android:id="@+id/addPostActivity"
+        android:name="com.tomal66.cconnect.Activities.AddPostActivity"
+        android:label="activity_add_post"
+        tools:layout="@layout/activity_add_post" />
 </navigation>
