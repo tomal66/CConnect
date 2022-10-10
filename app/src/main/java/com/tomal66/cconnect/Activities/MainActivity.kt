@@ -12,7 +12,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import butterknife.ButterKnife
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -23,6 +27,8 @@ import com.tomal66.cconnect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var navController: NavController
+
     private lateinit var binding : ActivityMainBinding
     val bottomSheet = MenuBottomSheet.Builder()
         .setMenuRes(R.menu.profile_options_menu)
@@ -31,26 +37,33 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ButterKnife.bind(this)
-        replaceFragment(HomeFragment())
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+        navController = navHostFragment.navController
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        setupWithNavController(bottomNavigationView, navController)
 
 
-        binding.bottomNavigation.setOnItemSelectedListener {
+
+
+
+        /*binding.bottomNavigation.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.nav_home -> replaceFragment(HomeFragment())
-                R.id.nav_search -> replaceFragment(SearchFragment())
-                R.id.nav_heart -> replaceFragment(NotificationFragment())
-                R.id.nav_profile -> replaceFragment(ProfileFragment())
+                R.id.homeFragment -> 
+                R.id.searchFragment ->
+                R.id.notificationFragment ->
+                R.id.profileFragment ->
                 else -> {
 
                 }
 
             }
             true
-        }
+        }*/
 
 
     }
@@ -58,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private  fun replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container,fragment)
+        fragmentTransaction.replace(R.id.main_container,fragment)
         fragmentTransaction.commit()
     }
 
