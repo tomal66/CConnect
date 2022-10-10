@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun sendEmail(recipient: String, subject: String, message: String) {

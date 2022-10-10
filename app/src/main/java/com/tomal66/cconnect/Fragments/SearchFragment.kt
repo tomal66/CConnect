@@ -58,7 +58,7 @@ class SearchFragment : Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (searchbar.text.toString().trim()==""){
-
+                    mUser?.clear()
                 }
                 else
                 {
