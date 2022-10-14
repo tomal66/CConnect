@@ -8,7 +8,7 @@ import com.tomal66.cconnect.R
 
 class CreateProfileActivity : AppCompatActivity() {
 
-    public lateinit var user : User
+    lateinit var user : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +16,7 @@ class CreateProfileActivity : AppCompatActivity() {
 
         val cpf1 = CreateProfileFragment1()
 
-        supportFragmentManager.beginTransaction().replace(R.id.create_profile_nav_container, cpf1).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView, cpf1).commit()
     }
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
