@@ -14,6 +14,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.FirebaseApp
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.mazenrashed.MenuBottomSheet
@@ -22,6 +25,8 @@ import com.tomal66.cconnect.Fragments.*
 import com.tomal66.cconnect.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+
 
     private lateinit var binding : ActivityMainBinding
     val bottomSheet = MenuBottomSheet.Builder()
@@ -36,6 +41,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         ButterKnife.bind(this)
         replaceFragment(HomeFragment())
+
+        // FireBase App check token for debugging
+        FirebaseApp.initializeApp(/*context=*/this)
+        val firebaseAppCheck = FirebaseAppCheck.getInstance()
+        firebaseAppCheck.installAppCheckProviderFactory(
+            DebugAppCheckProviderFactory.getInstance()
+        )
+
+
 
 
         binding.bottomNavigation.setOnItemSelectedListener {

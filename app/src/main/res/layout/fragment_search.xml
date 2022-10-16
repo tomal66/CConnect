@@ -11,7 +11,7 @@
         android:id="@+id/bar"
         android:background="?android:windowBackground">
 
-        <Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,14 +41,14 @@
 
                     />
             </LinearLayout>
-        </Toolbar>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bar"
-        android:id="@+id/recycler_view"/>
+        android:id="@+id/search_list"/>
 
 
 

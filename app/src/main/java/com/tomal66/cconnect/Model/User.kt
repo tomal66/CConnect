@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Model
 
 data class User(var username : String? = null,
+                var fullName : String? = null,
                 var firstname : String? = null,
                 var lastname : String? = null,
                 var age : String? = null,
@@ -9,7 +10,8 @@ data class User(var username : String? = null,
                 var department : String? = null,
                 var city : String? = null,
                 var country : String? = null,
-                var bio : String? = null) {
+                var bio : String? = null,
+                var uid: String?= null) {
 
     var posts : Int = 0
     var followers : Int = 0

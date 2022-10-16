@@ -38,20 +38,27 @@ class LoginActivity : AppCompatActivity() {
 
             val sEmail = editUsername.text.toString().trim()
             val sPassword = editPassword.text.toString().trim()
-
-            auth.signInWithEmailAndPassword(sEmail, sPassword)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user = auth.currentUser
-                        updateUI()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(baseContext, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                        updateUI()
+            if(sEmail.isEmpty() || sPassword.isEmpty())
+            {
+                Toast.makeText(baseContext, "Fields are empty!", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                auth.signInWithEmailAndPassword(sEmail, sPassword)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            val user = auth.currentUser
+                            updateUI()
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(baseContext, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                            //updateUI()
+                        }
                     }
-                }
+            }
+
         }
 
         signUpBtn.setOnClickListener(){

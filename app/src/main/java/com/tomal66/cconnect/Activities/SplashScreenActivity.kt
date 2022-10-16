@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AlphaAnimation
 import android.widget.ImageView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
 import com.tomal66.cconnect.R
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -20,5 +23,6 @@ class SplashScreenActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
+
     }
 }

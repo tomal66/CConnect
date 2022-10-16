@@ -142,13 +142,13 @@
                     android:textStyle="normal" />
 
                 <EditText
-                    android:id="@+id/editCity"
+                    android:id="@+id/editCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/background_forms"
                     android:ems="1"
-                    android:hint="City"
+                    android:hint="Country"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="#1c1c1c"
@@ -157,13 +157,13 @@
                     android:textStyle="normal" />
 
                 <EditText
-                    android:id="@+id/editCountry"
+                    android:id="@+id/editCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/background_forms"
                     android:ems="1"
-                    android:hint="Country"
+                    android:hint="City"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="#1c1c1c"
