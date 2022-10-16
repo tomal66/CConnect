@@ -21,11 +21,12 @@ class PersonalityTestActivity : AppCompatActivity() {
         changingText = findViewById(R.id.text_to_change);
         changingButton1 = findViewById(R.id.nextBtn);
         changingButton2 = findViewById(R.id.prevBtn);
-        /* nextBtn = findViewById(R.id.nextBtn)
-         nextBtn.setOnClickListener(){
-             val intent = Intent(this, InterestsActivity::class.java)
-             startActivity(intent)
-         }*/
+
+       /* nextBtn = findViewById(R.id.nextBtn)
+        nextBtn.setOnClickListener(){
+            val intent = Intent(this, InterestsActivity::class.java)
+            startActivity(intent)
+        }*/
 
         changeTextViewOnButtonClick();
         //changeTextOnce();
@@ -54,8 +55,8 @@ class PersonalityTestActivity : AppCompatActivity() {
             "You prefer to do your chores before allowing yourself to relax.",
             "You enjoy watching people argue.",
             "You tend to avoid drawing attention to yourself."
-        );
 
+        );
 
 
         length = usable.size
@@ -82,7 +83,9 @@ class PersonalityTestActivity : AppCompatActivity() {
         }
         else if(i < 0)
         {
+
             val intent = Intent(this, CreateProfileFragment1::class.java);
+
             startActivity(intent);
         }
     }

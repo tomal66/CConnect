@@ -102,8 +102,10 @@ class CreateProfileFragment1 : Fragment() {
 
             else -> {
                 val bio : String = "add me im blok"
+
                 val uid  = FirebaseAuth.getInstance().currentUser!!.uid
                 val user = User(username,firstname+" "+ lastname, firstname, lastname, age, gender, institution, department, city, country, bio,uid)
+
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()

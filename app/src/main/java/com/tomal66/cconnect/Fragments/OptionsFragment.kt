@@ -44,7 +44,7 @@ class OptionsFragment : Fragment() {
         back.setOnClickListener(){
             val fragment = ProfileFragment()
             val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container,fragment)?.commit()
+            transaction?.replace(R.id.main_container,fragment)?.commit()
         }
 
         logout.setOnClickListener(){
