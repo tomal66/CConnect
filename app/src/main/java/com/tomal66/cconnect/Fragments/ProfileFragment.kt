@@ -21,6 +21,8 @@ import butterknife.ButterKnife
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Activities.EditProfileActivity
@@ -79,12 +81,6 @@ class ProfileFragment : Fragment() {
         optionsBtn.setOnClickListener(){
             (activity as MainActivity).showBottomSheet()
         }
-        /*optionsBtn.setOnClickListener(){
-            val fragment = OptionsFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container,fragment)?.commit()
-
-        }*/
 
         return view
     }
@@ -97,15 +93,15 @@ class ProfileFragment : Fragment() {
 
     private fun getProfile() {
         getCurrentUser()
-
     }
 
     private fun getCurrentUser(){
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val usersRef: DatabaseReference = FirebaseDatabase.getInstance("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").reference.child("Users")
+        val usersRef: DatabaseReference = Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
         if(currentUserID.isNotEmpty()){
             usersRef.child(currentUserID).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+
                     user = snapshot.getValue(User::class.java)!!
                     username.setText(user.username)
                     fullname.setText(user.firstname + " " + user.lastname)
@@ -113,6 +109,7 @@ class ProfileFragment : Fragment() {
                     posts.setText(user.posts.toString())
                     followers.setText(user.followers.toString())
                     following.setText(user.following.toString())
+
                     storageReference = FirebaseStorage.getInstance().reference.child("Users/$currentUserID")
 
                     val localFile = File.createTempFile("tempImage","jpg")

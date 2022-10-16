@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/bar"
         android:background="?android:windowBackground">
-        <Toolbar
+
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
@@ -40,7 +41,7 @@
                     android:layout_toEndOf="@id/close" />
 
                 <ImageView
-                    android:id="@+id/save"
+                    android:id="@+id/update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -53,84 +54,204 @@
 
 
             </RelativeLayout>
-        </Toolbar>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="121dp"
         android:orientation="vertical"
         android:padding="10dp">
 
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
+            android:id="@+id/userImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:id="@+id/image_profile"
-            android:layout_margin="10dp"/>
+            android:layout_margin="5dp"
+            android:src="@drawable/default_user" />
 
         <TextView
+            android:id="@+id/tv_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Profile Picture"
             android:layout_gravity="center"
-            android:id="@+id/tv_change"
+            android:text="Change Profile Picture"
             android:textColor="@color/black"
-            android:textSize="16sp"/>
-
+            android:textSize="16sp" />
 
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/editFullname"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/background_forms"
-            android:ems="1"
-            android:hint="Full Name"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="#1c1c1c"
-            android:textColorHint="#65000000"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-        <EditText
-            android:id="@+id/editUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/background_forms"
-            android:ems="1"
-            android:hint="Username"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="#1c1c1c"
-            android:textColorHint="#65000000"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-        <EditText
-            android:id="@+id/editBio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/background_forms"
-            android:ems="1"
-            android:hint="Bio"
-            android:inputType="text"
-            android:padding="10dp"
-            android:textColor="#1c1c1c"
-            android:textColorHint="#65000000"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-    </LinearLayout>
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <!--        <TextView-->
+            <!--            android:id="@+id/username"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginBottom="15dp"-->
+            <!--            android:background="@drawable/background_forms"-->
+            <!--            android:ems="1"-->
+            <!--            android:text="Or username boshbe ekhane"-->
+            <!--            android:padding="10dp"-->
+            <!--            android:textColor="#1c1c1c"-->
+            <!--            android:textColorHint="#65000000"-->
+            <!--            android:textSize="15sp"-->
+            <!--            android:textStyle="normal" />-->
+            <EditText
+                android:id="@+id/editFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+
+                android:hint="First Name"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="Last Name"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+            <!--        <DatePicker-->
+            <!--            android:id="@+id/datePicker"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:calendarViewShown="false"-->
+            <!--            android:datePickerMode="spinner"-->
+            <!--            android:spinnersShown="true" />-->
+            <EditText
+                android:id="@+id/editAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:ems="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="Age"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:inputType="number"
+                android:textStyle="normal" />
+
+            <Spinner
+                android:id="@+id/editGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:entries="@array/gender"
+                android:padding="10dp"
+                android:scrollbarSize="15dp" />
+
+            <EditText
+                android:id="@+id/editInstitution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="Institution"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editDepartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="Department"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="Country"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="City"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editBio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_forms"
+                android:ems="1"
+                android:hint="Bio"
+                android:inputType="text"
+                android:padding="10dp"
+                android:textColor="#1c1c1c"
+                android:textColorHint="#65000000"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -17,12 +17,15 @@ import butterknife.ButterKnife
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Activities.CreateProfileActivity
 import com.tomal66.cconnect.Activities.PersonalityTestActivity
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
+import java.util.*
 
 class CreateProfileFragment1 : Fragment() {
 
@@ -99,8 +102,10 @@ class CreateProfileFragment1 : Fragment() {
 
             else -> {
                 val bio : String = "add me im blok"
-                val uid = FirebaseAuth.getInstance().currentUser!!.uid
-                val user = User(username, firstname, lastname, age, gender, institution, department, city, country, bio, uid)
+
+                val uid  = FirebaseAuth.getInstance().currentUser!!.uid
+                val user = User(username,firstname+" "+ lastname, firstname, lastname, age, gender, institution, department, city, country, bio,uid)
+
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()
@@ -113,7 +118,7 @@ class CreateProfileFragment1 : Fragment() {
 
     private fun saveUserInfo(user: User) {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val usersRef: DatabaseReference = FirebaseDatabase.getInstance("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").reference.child("Users")
+        val usersRef: DatabaseReference = Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users")
 
         usersRef.child(currentUserID).setValue(user).addOnCompleteListener {
 
