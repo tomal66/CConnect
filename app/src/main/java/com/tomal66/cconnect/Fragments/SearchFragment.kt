@@ -72,7 +72,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun searchUser(input: String) {
-        var query = FirebaseDatabase.getInstance("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").getReference()
+        var query = FirebaseDatabase.getInstance().getReference()
             .child("Users")
             .orderByChild("firstname")
             .startAt(input)
@@ -103,7 +103,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun retrieveUsers() {
-        var usersRef = FirebaseDatabase.getInstance("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").getReference().child("Users")
+        var usersRef = FirebaseDatabase.getInstance().getReference().child("Users")
         usersRef.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {

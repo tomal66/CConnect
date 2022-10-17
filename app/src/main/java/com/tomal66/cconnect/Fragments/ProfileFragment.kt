@@ -97,7 +97,7 @@ class ProfileFragment : Fragment() {
 
     private fun getCurrentUser(){
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val usersRef: DatabaseReference = Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
+        val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
         if(currentUserID.isNotEmpty()){
             usersRef.child(currentUserID).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {

@@ -78,7 +78,7 @@ class CreateProfileFragment1 : Fragment() {
         }
     }
 
-    fun createPrimaryProfile(view: View) {
+    private fun createPrimaryProfile(view: View) {
         var username : String = editUserame.text.toString()
         var firstname : String = editFirstName.text.toString()
         var lastname : String = editLastName.text.toString()
@@ -102,10 +102,7 @@ class CreateProfileFragment1 : Fragment() {
 
             else -> {
                 val bio : String = "add me im blok"
-
-                val uid  = FirebaseAuth.getInstance().currentUser!!.uid
-                val user = User(username,firstname+" "+ lastname, firstname, lastname, age, gender, institution, department, city, country, bio,uid)
-
+                val user = User(username,firstname+" "+ lastname, firstname, lastname, age, gender, institution, department, city, country, bio)
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()
@@ -118,7 +115,7 @@ class CreateProfileFragment1 : Fragment() {
 
     private fun saveUserInfo(user: User) {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val usersRef: DatabaseReference = Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("Users")
+        val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
         usersRef.child(currentUserID).setValue(user).addOnCompleteListener {
 

@@ -50,12 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         setupWithNavController(bottomNavigationView, navController)
 
-        // FireBase App check token for debugging
-        FirebaseApp.initializeApp(/*context=*/this)
-        val firebaseAppCheck = FirebaseAppCheck.getInstance()
-        firebaseAppCheck.installAppCheckProviderFactory(
-            DebugAppCheckProviderFactory.getInstance()
-        )
+
 
 
 

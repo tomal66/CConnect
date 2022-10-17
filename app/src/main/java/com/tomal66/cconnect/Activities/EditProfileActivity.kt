@@ -57,7 +57,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var profileImage : ImageView
 
     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-    var usersRef: DatabaseReference = Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
+    var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
     private val GALLERY_REQUEST_CODE = 1234
     private val Write_External_Storage_Code = 1
@@ -186,7 +186,7 @@ class EditProfileActivity : AppCompatActivity() {
                         )
 
 
-                        Firebase.database("https://cconnect-2905d-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users").child(currentUserID).setValue(user1).
+                        FirebaseDatabase.getInstance().getReference("Users").child(currentUserID).setValue(user1).
                         addOnCompleteListener {
 
                             if(it.isSuccessful)
