@@ -1,8 +1,10 @@
 package com.tomal66.cconnect.Activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -22,6 +24,8 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -80,8 +84,18 @@ class EditProfileActivity : AppCompatActivity() {
 //
 //        storage = FirebaseStorage.getInstance()
 
+        checkPermission()
+        requestPermission()
+
         binding.userImage.setOnClickListener {
-            pickFromGallery()
+
+            if(checkPermission()) {
+                pickFromGallery()
+            }
+            else{
+                Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
+                requestPermission()
+            }
         }
 
         binding.update.setOnClickListener{
@@ -89,7 +103,13 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         binding.tvChange.setOnClickListener{
-            pickFromGallery()
+            if(checkPermission()) {
+                pickFromGallery()
+            }
+            else{
+                Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
+                requestPermission()
+            }
         }
 
 
@@ -99,16 +119,6 @@ class EditProfileActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    private fun pickFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        val mimeTypes = arrayOf("image/jpeg", "image/png", "image/jpg")
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
-    }
-
     private fun showAllData()
     {
 
@@ -133,16 +143,14 @@ class EditProfileActivity : AppCompatActivity() {
 
                     storageReference.getFile(localFile).addOnSuccessListener {
 
-                        val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
-                        binding.userImage.setImageBitmap(bitmap)
+                    val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
+                    binding.userImage.setImageBitmap(bitmap)
 
 
                     }.addOnFailureListener{
                         Toast.makeText(this@EditProfileActivity, "Failed to retrieve image", Toast.LENGTH_SHORT).show()
                         //Toast.makeText(this,"Failed to retrieve image",Toast.LENGTH_SHORT).show()
                     }
-
-
 
                 }
 
@@ -151,14 +159,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
             })
-
-
         }
-
-
-
-
-
     }
 
     private fun updateData() {
@@ -221,6 +222,15 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun pickFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        val mimeTypes = arrayOf("image/jpeg", "image/png", "image/jpg")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        startActivityForResult(intent, GALLERY_REQUEST_CODE)
+    }
+
     private fun saveEditedImage() {
         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, finalUri)
         saveMediaToStorage(bitmap)
@@ -253,6 +263,72 @@ class EditProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "Saved to Photos", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+
+            GALLERY_REQUEST_CODE -> {
+                if (resultCode == RESULT_OK) {
+                    data?.data?.let { uri ->
+                        launchImageCrop(uri)
+                    }
+                }
+
+                else{
+
+                }
+            }
+
+        }
+
+        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+            val resultUri :Uri ?= UCrop.getOutput(data!!)
+
+            setImage(resultUri!!)
+
+
+            finalUri=resultUri
+            addProfileImage()
+
+        }
+    }
+
+    private fun addProfileImage() {
+
+
+        storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
+        storageReference.putFile(finalUri).addOnSuccessListener {
+
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun launchImageCrop(uri: Uri) {
+
+
+        var destination:String=StringBuilder(UUID.randomUUID().toString()).toString()
+        var options:UCrop.Options=UCrop.Options()
+
+
+        UCrop.of(Uri.parse(uri.toString()), Uri.fromFile(File(cacheDir,destination)))
+            .withOptions(options)
+            .withAspectRatio(0F, 0F)
+            .useSourceImageAspectRatio()
+            .withMaxResultSize(2000, 2000)
+            .start(this)
+
+
+    }
+    private fun setImage(uri: Uri){
+        Glide.with(this)
+            .load(uri)
+            .into(binding.userImage)
+    }
+
 
     private fun GenderChanged(): Boolean {
         if(!user.gender.equals(binding.editGender.selectedItem.toString()))
@@ -327,64 +403,30 @@ class EditProfileActivity : AppCompatActivity() {
         return false
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-
-            GALLERY_REQUEST_CODE -> {
-                if (resultCode == RESULT_OK) {
-                    data?.data?.let { uri ->
-                        launchImageCrop(uri)
-                    }
-                }
-
-                else{
-
-                }
-            }
-
-
-
-        }
-
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            val resultUri :Uri ?= UCrop.getOutput(data!!)
-
-            setImage(resultUri!!)
-
-            finalUri=resultUri
-
-
-        }
-
-
+    private fun checkPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-
-    private fun launchImageCrop(uri: Uri) {
-
-
-        var destination:String=StringBuilder(UUID.randomUUID().toString()).toString()
-        var options:UCrop.Options=UCrop.Options()
-
-
-        UCrop.of(Uri.parse(uri.toString()), Uri.fromFile(File(cacheDir,destination)))
-            .withOptions(options)
-            .withAspectRatio(0F, 0F)
-            .useSourceImageAspectRatio()
-            .withMaxResultSize(2000, 2000)
-            .start(this)
-
-
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            ),
+            100
+        )
     }
-    private fun setImage(uri: Uri){
-        Glide.with(this)
-            .load(uri)
-            .into(binding.userImage)
-    }
-
-
 
 }
 
