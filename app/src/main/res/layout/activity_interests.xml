@@ -32,72 +32,179 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:padding="10dp">
 
-                <com.nex3z.flowlayout.FlowLayout
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/filterChipGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:gravity="start|top">
+                    android:layout_height="match_parent">
 
-                    <TextView
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip1"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="Movies" />
-
-                    <TextView
+                        android:text="Animals"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip2"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="TV Series" />
-
-                    <TextView
+                        android:text="Art"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip3"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="Cars" />
-
-                    <TextView
+                        android:text="DIY"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip4"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="Books" />
-
-                    <TextView
+                        android:text="Electronics"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip5"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="App Development" />
-
-                    <TextView
+                        android:text="Entertainment"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip6"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="Problem Solving" />
-
-                    <TextView
+                        android:text="Fashion"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip7"
+                        style="@style/CustomChipStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/flow_button"
-                        android:padding="8dp"
-                        android:text="Technology" />
+                        android:text="Food"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip8"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Festivals"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip9"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gaming"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip10"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Health"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip11"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Music"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip12"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Memes"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip13"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outdoors"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip14"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Programming"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip15"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Photography"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip16"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Science"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip17"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Travel"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip18"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Writing"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
 
 
-                </com.nex3z.flowlayout.FlowLayout>
+                </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
         </ScrollView>
 
