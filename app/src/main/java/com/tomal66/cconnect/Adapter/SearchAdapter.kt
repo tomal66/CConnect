@@ -9,6 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
@@ -24,6 +28,9 @@ class SearchAdapter(private var mContext: Context,
                     private var isFragment: Boolean = false): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
 
+    private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+    private lateinit var currUser: User
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout, parent, false)
@@ -51,7 +58,93 @@ class SearchAdapter(private var mContext: Context,
         holder.deptuniv.text = user.department + ", " + user.institution
         holder.city.text = user.city
         Picasso.get().load(user.uid).placeholder(R.drawable.default_user).into(holder.profileImage)
+
+        checkFollowingStatus(user.uid, holder.followBtn)
+
+
+        usersRef.child(firebaseUser?.uid.toString()).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                currUser = snapshot.getValue(User::class.java)!!
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+
+
+        holder.followBtn.setOnClickListener(){
+            if(holder.followBtn.text.toString() == "Follow")
+            {
+                firebaseUser?.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().getReference()
+                        .child("Follow").child(it1.toString())
+                        .child("Following").child(user.uid.toString())
+                        .setValue(true).addOnCompleteListener(){ task->
+
+                            if(task.isSuccessful)
+                            {
+                                firebaseUser?.uid.let { it1 ->
+                                    FirebaseDatabase.getInstance().getReference()
+                                        .child("Follow").child(user.uid.toString())
+                                        .child("Followers").child(it1.toString())
+                                        .setValue(true).addOnCompleteListener(){ task->
+
+                                            if(task.isSuccessful)
+                                            {
+                                                user.followers++
+                                                currUser.following++
+                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
+                                                FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
+                                            }
+
+                                        }
+                                }
+                            }
+
+                        }
+                }
+            }
+
+            else
+            {
+                firebaseUser?.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().getReference()
+                        .child("Follow").child(it1.toString())
+                        .child("Following").child(user.uid.toString())
+                        .removeValue().addOnCompleteListener(){ task->
+
+                            if(task.isSuccessful)
+                            {
+                                firebaseUser?.uid.let { it1 ->
+                                    FirebaseDatabase.getInstance().getReference()
+                                        .child("Follow").child(user.uid.toString())
+                                        .child("Followers").child(it1.toString())
+                                        .removeValue().addOnCompleteListener(){ task->
+
+                                            if(task.isSuccessful)
+                                            {
+                                                user.followers--
+                                                currUser.following--
+                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
+                                                FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
+                                            }
+
+                                        }
+                                }
+                            }
+
+                        }
+                }
+            }
+        }
     }
+
+
 
     override fun getItemCount(): Int {
         return userList.size
@@ -64,9 +157,36 @@ class SearchAdapter(private var mContext: Context,
         var username : TextView = itemView.findViewById(R.id.username)
         var deptuniv : TextView = itemView.findViewById(R.id.deptuniv)
         var city : TextView = itemView.findViewById(R.id.city)
-        var followState : TextView = itemView.findViewById(R.id.followState)
-        var followBtn : ImageView = itemView.findViewById(R.id.followBtn)
+        var followBtn : Chip = itemView.findViewById(R.id.followBtn)
 
 
     }
+
+    private fun checkFollowingStatus(uid: String?, followBtn: Chip) {
+        val followingRef = firebaseUser?.uid.let { it1 ->
+            FirebaseDatabase.getInstance().getReference()
+                .child("Follow").child(it1.toString())
+                .child("Following")
+        }
+
+        followingRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(uid?.let { snapshot.child(it).exists() } == true)
+                {
+                    followBtn.text = "Following"
+                    followBtn.isChecked = true
+                }
+                else
+                {
+                    followBtn.text = "Follow"
+                    followBtn.isChecked = false
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
 }

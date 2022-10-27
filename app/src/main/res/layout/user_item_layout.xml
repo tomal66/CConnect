@@ -72,23 +72,26 @@
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp">
+                android:layout_marginEnd="0dp">
 
-                <TextView
-                    android:id="@+id/followState"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/filterChipGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:text="Follow" />
+                    android:layout_marginEnd="10dp">
 
-                <ImageView
-                    android:id="@+id/followBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_toEndOf="@id/followState"
-                    android:src="@drawable/ic_follow" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/followBtn"
+                        style="@style/CustomChipStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Follow"
+                        android:checked="false"
+                        android:layout_margin="5dp"
+                        />
 
+                </com.google.android.material.chip.ChipGroup>
 
             </RelativeLayout>
 
