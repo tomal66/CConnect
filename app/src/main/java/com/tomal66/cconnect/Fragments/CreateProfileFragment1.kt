@@ -101,9 +101,10 @@ class CreateProfileFragment1 : Fragment() {
             TextUtils.isEmpty(country) -> Toast.makeText(activity, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
 
             else -> {
-                val bio : String = "add me im blok"
+                val bio : String = "Hey there, I'm using OyeAmigo!"
                 val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-                val user = User(username,firstname+" "+ lastname, firstname, lastname, age, gender, institution, department, city, country, bio, currentUserID)
+                val fullname = (firstname+" "+ lastname).toLowerCase()
+                val user = User(username,fullname, firstname, lastname, age, gender, institution, department, city, country, bio, currentUserID)
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()

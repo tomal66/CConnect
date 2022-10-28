@@ -63,7 +63,7 @@ class SearchFragment : Fragment() {
                 else
                 {
                     retrieveUsers()
-                    searchUser(p0.toString())
+                    searchUser(p0.toString().toLowerCase())
                 }
             }
         })
@@ -74,7 +74,7 @@ class SearchFragment : Fragment() {
     private fun searchUser(input: String) {
         var query = FirebaseDatabase.getInstance().getReference()
             .child("Users")
-            .orderByChild("firstname")
+            .orderByChild("fullName")
             .startAt(input)
             .endAt(input + "\uf8ff")
 
