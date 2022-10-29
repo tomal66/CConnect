@@ -49,6 +49,9 @@ import com.yalantis.ucrop.UCrop
 import java.io.*
 import java.lang.ref.WeakReference
 import java.util.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -136,6 +139,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.update.setOnClickListener{
             updateData()
+            finish()
         }
         binding.changePictureButton.setOnClickListener{
             showBottomSheet()
@@ -252,14 +256,15 @@ class EditProfileActivity : AppCompatActivity() {
                             if(it.isSuccessful)
                             {
                                 val intent = Intent(this@EditProfileActivity, MainActivity::class.java)
-                                Toast.makeText(this@EditProfileActivity, "Profile updated", Toast.LENGTH_SHORT).show()
-                                startActivity(intent)
+//                                Toast.makeText(this@EditProfileActivity, "Profile upfdhdated", Toast.LENGTH_SHORT).show()
+                                finish()
+                                //startActivity(intent)
                             }
                             else
                             {
                                 Toast.makeText(this@EditProfileActivity, "Failed to update data",Toast.LENGTH_SHORT).show()
                             }
-                            finish()
+                            //finish()
 
                         }
 
@@ -276,7 +281,6 @@ class EditProfileActivity : AppCompatActivity() {
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
                 }
-
 
             })
 
@@ -397,7 +401,8 @@ class EditProfileActivity : AppCompatActivity() {
 
         storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
         storageReference.putFile(finalUri).addOnSuccessListener {
-            Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "Profile Updadggted", Toast.LENGTH_SHORT).show()
+            finish()
         }.addOnFailureListener {
             Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
         }
