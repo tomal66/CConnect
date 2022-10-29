@@ -3,6 +3,7 @@ package com.tomal66.cconnect.Activities
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -20,12 +21,14 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import butterknife.BindView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -34,39 +37,52 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.mazenrashed.MenuBottomSheet
 import com.tomal66.cconnect.Fragments.HomeFragment
+import com.tomal66.cconnect.Fragments.OptionsFragment
 import com.tomal66.cconnect.Fragments.ProfileFragment
 import com.tomal66.cconnect.Model.User
 //import com.rengwuxian.materialedittext.MaterialEditText
 import com.tomal66.cconnect.R
 import com.tomal66.cconnect.databinding.ActivityEditProfileBinding
 import com.yalantis.ucrop.UCrop
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.*
+import java.lang.ref.WeakReference
 import java.util.*
+
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var close : ImageView
     private lateinit var image_profile : ImageView
     private lateinit var save : ImageView
-    private lateinit var tv_change : TextView
     private lateinit var binding : ActivityEditProfileBinding
     private lateinit var auth : FirebaseAuth
     private lateinit var dialog: AlertDialog.Builder
     private lateinit var user : User
     private lateinit var storageReference: StorageReference
 
+    private lateinit var activityResultLauncher:ActivityResultLauncher<Intent>
+
     @BindView(R.id.image_profile)
     lateinit var profileImage : ImageView
+    var picChanged = false
 
+
+    //database Ref
     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
     var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
+    // Req code to get permission of camera and gallery
     private val GALLERY_REQUEST_CODE = 1234
-    private val Write_External_Storage_Code = 1
+    private val WRITE_EXTERNAL_STORAGE_CODE = 1
 
+    // finalUri is tha final processed image after cropping
     lateinit var finalUri: Uri
+
+    val bottomSheet = MenuBottomSheet.Builder()
+        .setMenuRes(R.menu.change_dp_menu)
+        .closeAfterSelect(true)
+        .build()
 
 
 
@@ -80,45 +96,87 @@ class EditProfileActivity : AppCompatActivity() {
         dialog = AlertDialog.Builder(this).setMessage("Updating Profile...")
             .setCancelable(false)
 
-//        database = FirebaseDatabase.getInstance()
-//
-//        storage = FirebaseStorage.getInstance()
-
         checkPermission()
         requestPermission()
 
-        binding.userImage.setOnClickListener {
 
-            if(checkPermission()) {
-                pickFromGallery()
+        activityResultLauncher  =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+                if (result.resultCode== RESULT_OK) {
+
+                    var extras: Bundle? = result.data?.extras
+
+                    var imageUri: Uri
+
+                    var imageBitmap = extras?.get("data") as Bitmap
+
+                    var imageResult: WeakReference<Bitmap> = WeakReference(
+                        Bitmap.createScaledBitmap(
+                            imageBitmap, imageBitmap.width, imageBitmap.height, false
+                        ).copy(
+                            Bitmap.Config.RGB_565, true
+                        )
+                    )
+
+                    var bm = imageResult.get()
+
+                    imageUri = saveImage(bm, this)
+
+
+                    launchImageCrop(imageUri)
+
+                }
+
+                else{
+
+                }
+
             }
-            else{
-                Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
-                requestPermission()
-            }
-        }
 
         binding.update.setOnClickListener{
             updateData()
         }
-
-        binding.tvChange.setOnClickListener{
-            if(checkPermission()) {
-                pickFromGallery()
-            }
-            else{
-                Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
-                requestPermission()
-            }
+        binding.changePictureButton.setOnClickListener{
+            showBottomSheet()
         }
-
-
 
         close = findViewById(R.id.close)
         close.setOnClickListener() {
             finish()
         }
     }
+
+    fun showBottomSheet(){
+        bottomSheet.show(this)
+        bottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
+            when (id) {
+                R.id.bottomsheet_camera -> selectCamera()
+                R.id.bottomsheet_gallery -> selectGallery()
+                else -> Toast.makeText(this, "Nothing", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun selectCamera()
+    {
+        if(checkPermission()) {
+            pickFromCamera()
+        }
+        else{
+            Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
+            requestPermission()
+        }
+    }
+    fun selectGallery(){
+        if(checkPermission()) {
+            pickFromGallery()
+        }
+        else{
+            Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
+            requestPermission()
+        }
+    }
+
     private fun showAllData()
     {
 
@@ -172,9 +230,9 @@ class EditProfileActivity : AppCompatActivity() {
                     user = snapshot.getValue(User::class.java)!!
 
 
-                    if (firstNameChanged() || lastNameChanged() || ageChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged()) {
+                    if (firstNameChanged() || lastNameChanged() || ageChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged() || picChanged) {
                         val user1 = User(user.username,
-                            binding.editFirstName.editableText.toString()+ " " + binding.editLastName.editableText.toString(),
+                            (binding.editFirstName.editableText.toString()+ " " + binding.editLastName.editableText.toString()).toLowerCase(),
                             binding.editFirstName.editableText.toString(),
                             binding.editLastName.editableText.toString(),
                             binding.editAge.editableText.toString(),
@@ -183,7 +241,8 @@ class EditProfileActivity : AppCompatActivity() {
                             binding.editDepartment.editableText.toString(),
                             binding.editCity.editableText.toString(),
                             binding.editCountry.editableText.toString(),
-                            binding.editBio.editableText.toString()
+                            binding.editBio.editableText.toString(),
+                            user.uid
                         )
 
 
@@ -205,11 +264,13 @@ class EditProfileActivity : AppCompatActivity() {
                         }
 
                     }
-                    else {
-                        Toast.makeText(this@EditProfileActivity, "Nothing to change", Toast.LENGTH_SHORT).show()
-                    }
 
-                    saveEditedImage()
+                    //saveEditedImage()
+                    if(picChanged)
+                    {
+                        addProfileImage()
+                    }
+                    finish()
 
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -219,6 +280,9 @@ class EditProfileActivity : AppCompatActivity() {
 
             })
 
+        }
+        else{
+            Toast.makeText(this, "Please Login First", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -231,9 +295,44 @@ class EditProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
+    private fun pickFromCamera(){
+
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        activityResultLauncher.launch(intent)
+    }
+
+
+
     private fun saveEditedImage() {
         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, finalUri)
         saveMediaToStorage(bitmap)
+
+    }
+    private fun saveImage(image: Bitmap?, context: android.content.Context): Uri {
+
+
+
+        var imageFolder=File(context.cacheDir,"images")
+        var uri: Uri? = null
+
+        try {
+
+            imageFolder.mkdirs()
+            var file:File= File(imageFolder,"captured_image.png")
+            var stream:FileOutputStream= FileOutputStream(file)
+            image?.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            stream.flush()
+            stream.close()
+            uri=FileProvider.getUriForFile(context.applicationContext,"com.tomal66.cconnect"+".provider",file)
+
+
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }catch (e:IOException){
+            e.printStackTrace()
+        }
+
+        return uri!!
 
     }
 
@@ -275,7 +374,6 @@ class EditProfileActivity : AppCompatActivity() {
                         launchImageCrop(uri)
                     }
                 }
-
                 else{
 
                 }
@@ -288,19 +386,18 @@ class EditProfileActivity : AppCompatActivity() {
 
             setImage(resultUri!!)
 
-
+            picChanged = true;
             finalUri=resultUri
-            addProfileImage()
+            saveEditedImage()
 
         }
     }
 
     private fun addProfileImage() {
 
-
         storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
         storageReference.putFile(finalUri).addOnSuccessListener {
-
+            Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
         }
@@ -312,6 +409,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         var destination:String=StringBuilder(UUID.randomUUID().toString()).toString()
         var options:UCrop.Options=UCrop.Options()
+
+        //image Compression
+
+        options.setCompressionQuality(100);
+        options.setMaxBitmapSize(1000);
+
 
 
         UCrop.of(Uri.parse(uri.toString()), Uri.fromFile(File(cacheDir,destination)))
@@ -333,7 +436,6 @@ class EditProfileActivity : AppCompatActivity() {
     private fun GenderChanged(): Boolean {
         if(!user.gender.equals(binding.editGender.selectedItem.toString()))
         {
-//            user.department = binding.editDepartment.editableText.toString()
             return true
         }
         return false
@@ -427,6 +529,28 @@ class EditProfileActivity : AppCompatActivity() {
             100
         )
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode) {
+
+            WRITE_EXTERNAL_STORAGE_CODE -> {
+
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+                } else {
+                    Toast.makeText(this, "Enable permissions", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+    }
+
 
 }
 

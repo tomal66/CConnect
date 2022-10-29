@@ -60,7 +60,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:layout_height="145dp"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -73,14 +73,12 @@
             android:layout_margin="5dp"
             android:src="@drawable/default_user" />
 
-        <TextView
-            android:id="@+id/tv_change"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/changePictureButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="Change Profile Picture"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textAllCaps="false"/>
 
 
     </LinearLayout>
@@ -95,19 +93,6 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <!--        <TextView-->
-            <!--            android:id="@+id/username"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="wrap_content"-->
-            <!--            android:layout_marginBottom="15dp"-->
-            <!--            android:background="@drawable/background_forms"-->
-            <!--            android:ems="1"-->
-            <!--            android:text="Or username boshbe ekhane"-->
-            <!--            android:padding="10dp"-->
-            <!--            android:textColor="#1c1c1c"-->
-            <!--            android:textColorHint="#65000000"-->
-            <!--            android:textSize="15sp"-->
-            <!--            android:textStyle="normal" />-->
             <EditText
                 android:id="@+id/editFirstName"
                 android:layout_width="match_parent"
