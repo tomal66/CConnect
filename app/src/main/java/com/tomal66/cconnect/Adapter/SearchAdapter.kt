@@ -51,7 +51,7 @@ class SearchAdapter(private var mContext: Context,
 
 
         }.addOnFailureListener{
-
+            //push karo khush raho
         }
         holder.username.text = user.username
         holder.fullname.text = user.firstname + " " + user.lastname
