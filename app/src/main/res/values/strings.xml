@@ -11,6 +11,7 @@
     <string name="close">Close</string>
     <string name="birthday" />
     <string name="save_and_update">Save and Update</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
     <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
