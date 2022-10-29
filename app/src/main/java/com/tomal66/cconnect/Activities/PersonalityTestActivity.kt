@@ -1,26 +1,37 @@
 package com.tomal66.cconnect.Activities
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.tomal66.cconnect.Fragments.CreateProfileFragment1
 import com.tomal66.cconnect.R
 
 class PersonalityTestActivity : AppCompatActivity() {
     private  var i = 0;
     private var length = 0;
+    private var currentProgress = 0;
     private lateinit var nextBtn:Button
     private lateinit var changingText : TextView
     private lateinit var changingButton1: Button
     private lateinit var changingButton2: Button
+    @BindView(R.id.quizProgress)
+    lateinit var progressBar : ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personality_test)
+        ButterKnife.bind(this)
         changingText = findViewById(R.id.text_to_change);
         changingButton1 = findViewById(R.id.nextBtn);
         changingButton2 = findViewById(R.id.prevBtn);
+        progressBar.max = 18*100
+        progressBar.progress = currentProgress
 
        /* nextBtn = findViewById(R.id.nextBtn)
         nextBtn.setOnClickListener(){
@@ -64,12 +75,22 @@ class PersonalityTestActivity : AppCompatActivity() {
         {
             changingText.text = usable[i];
             i++;
+            currentProgress = i*100
+            ObjectAnimator.ofInt(progressBar, "progress", currentProgress)
+                .setDuration(200)
+                .start()
+            //progressBar.progress = currentProgress
             checkingStatus();
 
         };
         changingButton2.setOnClickListener(){
             changingText.text = usable[i];
             i--;
+            currentProgress = i*100
+            ObjectAnimator.ofInt(progressBar, "progress", currentProgress)
+                .setDuration(200)
+                .start()
+            //progressBar.progress = currentProgress
             checkingStatus();
         }
 
