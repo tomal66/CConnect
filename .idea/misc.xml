@@ -5,12 +5,19 @@
       <map>
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/drawable/hello.xml" value="0.157" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/drawable/hellow.xml" value="0.157" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_create_profile.xml" value="0.2" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_personality_test.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_new_message.xml" value="0.2" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_personality_test.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/activity_signup.xml" value="0.264" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile1.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_create_profile1.xml" value="0.264" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_home.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/fragment_profile.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/post_item.xml" value="0.12360688956433637" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/user_item_layout.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/layout/user_row_new_message.xml" value="0.25226449275362317" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CConnect/app/src/main/res/menu/nav_menu.xml" value="0.264" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/background_forms.xml" value="0.2775" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/bottomnav_icon_color.xml" value="0.263" />
         <entry key="..\:/Users/Tech Land/AndroidStudioProjects/CConnect/app/src/main/res/drawable/btn_strongly_disagree.xml" value="0.2825" />
