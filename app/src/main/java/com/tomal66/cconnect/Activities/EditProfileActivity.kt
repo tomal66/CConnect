@@ -246,7 +246,11 @@ class EditProfileActivity : AppCompatActivity() {
                             binding.editCity.editableText.toString(),
                             binding.editCountry.editableText.toString(),
                             binding.editBio.editableText.toString(),
-                            user.uid
+                            user.uid,
+                            user.posts,
+                            user.followers,
+                            user.following,
+                            user.personality
                         )
 
 

@@ -11,12 +11,17 @@ data class User(var username : String? = null,
                 var city : String? = null,
                 var country : String? = null,
                 var bio : String? = null,
-                var uid: String?= null) {
+                var uid: String?= null,
+                var posts : Int?= null,
+                var followers : Int?= null,
+                var following : Int?= null,
+                var personality : ArrayList<Int>?= null
+
+) {
 
 
-    var posts : Int = 0
-    var followers : Int = 0
-    var following : Int = 0
+
+
 
 
     /*constructor(username: String, firstname: String, lastname: String, age: String, gender: String,

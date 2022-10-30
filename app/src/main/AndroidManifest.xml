@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.tomal66.cconnect">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -29,6 +33,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".Activities.ChatActivity"
@@ -42,13 +47,11 @@
         <activity
             android:name=".Activities.EditProfileActivity"
             android:exported="false" />
-        <activity android:name=".Activities.NewMessageActivity"
-            android:exported="false">
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".Activities.ChatActivity"/>
-        </activity>
         <activity
             android:name=".Activities.PersonalityTestActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".Activities.CreateProfileActivity"
             android:exported="true">
@@ -59,7 +62,7 @@
             android:exported="false" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"

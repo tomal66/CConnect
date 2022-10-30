@@ -50,51 +50,45 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:orientation="vertical">
-            <Button
-                android:id="@+id/sDisagreeBtn"
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:checkedButton="@+id/radio_button_3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#AE4BBF"
-                android:text="Strongly Disagree"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
-            <Button
-                android:id="@+id/disagreeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#DE7CEF"
-                android:text="Disagree"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
-            <Button
-                android:id="@+id/neutralBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#A6A2A6"
-                android:text="Neutral"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
-            <Button
-                android:id="@+id/agreeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#7DCA80"
-                android:text="Agree"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
-            <Button
-                android:id="@+id/sAgreeeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#4CAF50"
-                android:text="Strongly Agree"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold|normal" />
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/radio_button_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#AE4BBF"
+                    android:text="Strongly Disagree"
+                    />
+                <RadioButton
+                    android:id="@+id/radio_button_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#DE7CEF"
+                    android:text="Disagree"/>
+                <RadioButton
+                    android:id="@+id/radio_button_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#A6A2A6"
+                    android:text="Neutral"/>
+                <RadioButton
+                    android:id="@+id/radio_button_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#7DCA80"
+                    android:text="Agree"/>
+                <RadioButton
+                    android:id="@+id/radio_button_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:buttonTint="#4CAF50"
+                    android:text="Strongly Agree"/>
+            </RadioGroup>
+
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

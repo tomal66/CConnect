@@ -104,7 +104,10 @@ class CreateProfileFragment1 : Fragment() {
                 val bio : String = "Hey there, I'm using OyeAmigo!"
                 val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                 val fullname = (firstname+" "+ lastname).toLowerCase()
-                val user = User(username,fullname, firstname, lastname, age, gender, institution, department, city, country, bio, currentUserID)
+                var personality : ArrayList<Int> = arrayListOf<Int>(3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3)
+                val user = User(username,fullname, firstname, lastname, age, gender, institution, department, city, country, bio, currentUserID,
+                    0, 0, 0, personality)
+
                 saveUserInfo(user)
 
                 /*val fragment = CreateProfileFragment2()

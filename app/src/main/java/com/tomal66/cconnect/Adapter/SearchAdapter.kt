@@ -96,8 +96,8 @@ class SearchAdapter(private var mContext: Context,
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers++
-                                                currUser.following++
+                                                user.followers = user.followers?.plus(1)
+                                                currUser.following = currUser.following?.plus(1)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
                                             }
@@ -128,8 +128,8 @@ class SearchAdapter(private var mContext: Context,
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers--
-                                                currUser.following--
+                                                user.followers = user.followers?.minus(1)
+                                                currUser.following = currUser.following?.minus(1)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
                                             }
