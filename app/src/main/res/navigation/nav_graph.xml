@@ -32,21 +32,12 @@
         android:id="@+id/profileFragment"
         android:name="com.tomal66.cconnect.Fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_optionsFragment"
-            app:destination="@id/optionsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.tomal66.cconnect.Fragments.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
-    <fragment
-        android:id="@+id/optionsFragment"
-        android:name="com.tomal66.cconnect.Fragments.OptionsFragment"
-        android:label="fragment_options"
-        tools:layout="@layout/fragment_options" />
     <activity
         android:id="@+id/addPostActivity"
         android:name="com.tomal66.cconnect.Activities.AddPostActivity"

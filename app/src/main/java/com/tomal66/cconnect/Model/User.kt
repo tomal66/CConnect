@@ -19,11 +19,6 @@ data class User(var username : String? = null,
 
 ) {
 
-
-
-
-
-
     /*constructor(username: String, firstname: String, lastname: String, age: String, gender: String,
                 institution: String, department: String, city: String, country: String)
     {
