@@ -145,7 +145,7 @@ class PersonalityTestActivity : AppCompatActivity() {
         when(checkedBtn) {
             R.id.radio_button_1 -> {
                 user.personality?.set(i,1)
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
             }
             R.id.radio_button_2 -> {
                 user.personality?.set(i,2)

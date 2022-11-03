@@ -207,15 +207,199 @@
                     />
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:id="@+id/aboutdata">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_education"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Education"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:layout_marginLeft="45dp"
+                            android:id="@+id/department"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/university"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_city"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Current City"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/city"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_person"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gender"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/gender"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_cake"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date of Birth"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/dob"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_margin="10dp">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_interests"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Interests"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/interests"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15sp"
+                            android:textStyle="bold"/>
+
+
+                    </LinearLayout>
 
 
 
 
-            </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
