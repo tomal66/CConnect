@@ -9,7 +9,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.tomal66.cconnect.Fragments.CreateProfileFragment1
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
 

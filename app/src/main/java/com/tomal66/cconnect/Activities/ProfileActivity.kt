@@ -1,69 +1,70 @@
-package com.tomal66.cconnect.Adapter
+package com.tomal66.cconnect.Activities
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
-import com.tomal66.cconnect.Activities.ProfileActivity
-import com.tomal66.cconnect.Fragments.SearchFragment
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
-import org.jetbrains.annotations.NotNull
-import org.w3c.dom.Text
 import java.io.File
 
-class SearchAdapter(private var mContext: Context,
-                    private var userList: ArrayList<User>,
-                    private var isFragment: Boolean = false): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class ProfileActivity : AppCompatActivity() {
 
+    @BindView(R.id.username)
+    lateinit var username : TextView
+
+    @BindView(R.id.image_profile)
+    lateinit var profileImage : ImageView
+
+    @BindView(R.id.posts)
+    lateinit var posts : TextView
+
+    @BindView(R.id.followers)
+    lateinit var followers : TextView
+
+    @BindView(R.id.following)
+    lateinit var following : TextView
+
+    @BindView(R.id.fullname)
+    lateinit var fullname : TextView
+
+    @BindView(R.id.bio)
+    lateinit var bio : TextView
+
+    @BindView(R.id.followBtn)
+    lateinit var followBtn : Chip
+
+    private var user : User? = null
+    private lateinit var storageReference: StorageReference
+    private lateinit var imageUri : Uri
 
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var currUser: User
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout, parent, false)
-        return SearchAdapter.ViewHolder(view)
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_profile)
+        ButterKnife.bind(this)
+        val uid = intent.getStringExtra("uid")
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = userList[position]
-        var storageReference: StorageReference
-        storageReference = FirebaseStorage.getInstance().reference.child("Users/${user.uid}")
-
-        val localFile = File.createTempFile("tempImage","jpg")
-
-        storageReference.getFile(localFile).addOnSuccessListener {
-
-            val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
-            holder.profileImage.setImageBitmap(bitmap)
-
-
-        }.addOnFailureListener{
-            //push karo khush raho
+        if (uid != null) {
+            getUser(uid)
         }
-        holder.username.text = user.username
-        holder.fullname.text = user.firstname + " " + user.lastname
-        holder.deptuniv.text = user.department + ", " + user.institution
-        holder.city.text = user.city
-        Picasso.get().load(user.uid).placeholder(R.drawable.default_user).into(holder.profileImage)
 
-        checkFollowingStatus(user.uid, holder.followBtn)
-
+        checkFollowingStatus(uid, followBtn)
 
         usersRef.child(firebaseUser?.uid.toString()).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,37 +78,29 @@ class SearchAdapter(private var mContext: Context,
 
         })
 
-        holder.layout.setOnClickListener(){
-            val intent = Intent(mContext, ProfileActivity::class.java)
-            intent.putExtra("uid", user.uid)
-            mContext.startActivity(intent)
-        }
-
-
-
-
-        holder.followBtn.setOnClickListener(){
-            if(holder.followBtn.text.toString() == "Follow")
+        followBtn.setOnClickListener(){
+            if(followBtn.text.toString() == "Follow")
             {
                 firebaseUser?.uid.let { it1 ->
                     FirebaseDatabase.getInstance().getReference()
                         .child("Follow").child(it1.toString())
-                        .child("Following").child(user.uid.toString())
+                        .child("Following").child(user?.uid.toString())
                         .setValue(true).addOnCompleteListener(){ task->
 
                             if(task.isSuccessful)
                             {
                                 firebaseUser?.uid.let { it1 ->
                                     FirebaseDatabase.getInstance().getReference()
-                                        .child("Follow").child(user.uid.toString())
+                                        .child("Follow").child(user?.uid.toString())
                                         .child("Followers").child(it1.toString())
                                         .setValue(true).addOnCompleteListener(){ task->
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers = user.followers?.plus(1)
+                                                user?.followers = user?.followers?.plus(1)
                                                 currUser.following = currUser.following?.plus(1)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
+                                                FirebaseDatabase.getInstance().getReference("Users").child(
+                                                    user?.uid.toString()).setValue(user)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
                                             }
 
@@ -124,22 +117,23 @@ class SearchAdapter(private var mContext: Context,
                 firebaseUser?.uid.let { it1 ->
                     FirebaseDatabase.getInstance().getReference()
                         .child("Follow").child(it1.toString())
-                        .child("Following").child(user.uid.toString())
+                        .child("Following").child(user?.uid.toString())
                         .removeValue().addOnCompleteListener(){ task->
 
                             if(task.isSuccessful)
                             {
                                 firebaseUser?.uid.let { it1 ->
                                     FirebaseDatabase.getInstance().getReference()
-                                        .child("Follow").child(user.uid.toString())
+                                        .child("Follow").child(user?.uid.toString())
                                         .child("Followers").child(it1.toString())
                                         .removeValue().addOnCompleteListener(){ task->
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers = user.followers?.minus(1)
+                                                user?.followers = user?.followers?.minus(1)
                                                 currUser.following = currUser.following?.minus(1)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
+                                                FirebaseDatabase.getInstance().getReference("Users").child(
+                                                    user?.uid.toString()).setValue(user)
                                                 FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
                                             }
 
@@ -151,24 +145,6 @@ class SearchAdapter(private var mContext: Context,
                 }
             }
         }
-    }
-
-
-
-    override fun getItemCount(): Int {
-        return userList.size
-    }
-
-    class ViewHolder(@NotNull itemView: View) : RecyclerView.ViewHolder(itemView){
-
-        var profileImage : ImageView = itemView.findViewById(R.id.profile_image)
-        var fullname : TextView = itemView.findViewById(R.id.fullname)
-        var username : TextView = itemView.findViewById(R.id.username)
-        var deptuniv : TextView = itemView.findViewById(R.id.deptuniv)
-        var city : TextView = itemView.findViewById(R.id.city)
-        var followBtn : Chip = itemView.findViewById(R.id.followBtn)
-        var layout : LinearLayout = itemView.findViewById(R.id.user_item)
-
 
     }
 
@@ -199,4 +175,46 @@ class SearchAdapter(private var mContext: Context,
         })
     }
 
+    private fun getUser(uid : String){
+        val currentUserID = uid
+        val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        if(currentUserID.isNotEmpty()){
+            usersRef.child(currentUserID).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    user = snapshot.getValue(User::class.java)!!
+                    username.setText(user!!.username)
+                    fullname.setText(user!!.firstname + " " + user!!.lastname)
+                    bio.setText(user!!.bio)
+                    posts.setText(user!!.posts.toString())
+                    followers.setText(user!!.followers.toString())
+                    following.setText(user!!.following.toString())
+
+                    storageReference = FirebaseStorage.getInstance().reference.child("Users/$currentUserID")
+
+                    val localFile = File.createTempFile("tempImage","jpg")
+
+                    storageReference.getFile(localFile).addOnSuccessListener {
+
+                        val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
+                        profileImage.setImageBitmap(bitmap)
+
+
+                    }.addOnFailureListener{
+                        Toast.makeText(this@ProfileActivity,"Failed to retrieve image", Toast.LENGTH_SHORT).show()
+                    }
+
+
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+
+
+        }
+
+    }
 }

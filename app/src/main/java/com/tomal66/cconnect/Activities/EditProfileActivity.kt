@@ -178,7 +178,7 @@ class EditProfileActivity : AppCompatActivity() {
 
                     binding.editFirstName.setText(user.firstname )
                     binding.editLastName.setText( user.lastname )
-                    binding.editAge.setText(user.age)
+                    binding.editAge.setText(user.dob)
                     binding.editBio.setText(user.bio)
                     //binding.editGender.setSelection(3)
                     binding.editCountry.setText(user.country)
@@ -478,7 +478,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun ageChanged(): Boolean {
-        if(!user.age.equals(binding.editAge.editableText.toString()))
+        if(!user.dob.equals(binding.editAge.editableText.toString()))
         {
             return true
         }

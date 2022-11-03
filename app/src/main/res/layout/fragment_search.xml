@@ -26,6 +26,7 @@
                     android:src="@drawable/ic_search_light" />
 
                 <EditText
+                    android:singleLine="true"
                     android:id="@+id/search_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
