@@ -148,8 +148,9 @@ class CreateProfileActivity : AppCompatActivity() {
                 val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                 val fullname = (firstname+" "+ lastname).toLowerCase()
                 var personality : ArrayList<Int> = arrayListOf<Int>(3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3)
+                val list: ArrayList<String> = ArrayList()
                 val user = User(username,fullname, firstname, lastname, dob, gender, institution, department, city, country, bio, currentUserID,
-                    0, 0, 0, personality)
+                    0, 0, 0, personality, list)
 
                 saveUserInfo(user)
 

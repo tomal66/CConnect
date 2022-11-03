@@ -15,7 +15,8 @@ data class User(var username : String? = null,
                 var posts : Int?= null,
                 var followers : Int?= null,
                 var following : Int?= null,
-                var personality : ArrayList<Int>?= null
+                var personality : ArrayList<Int>?= null,
+                var interest : ArrayList<String>?= null
 
 ) {
 
