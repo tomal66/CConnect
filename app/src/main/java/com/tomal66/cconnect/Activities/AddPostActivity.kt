@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Activities
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,8 +14,11 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -32,6 +36,7 @@ import com.tomal66.cconnect.databinding.ActivityAddPostBinding
 import com.tomal66.cconnect.databinding.ActivityEditProfileBinding
 import com.yalantis.ucrop.UCrop
 import java.io.*
+import java.lang.ref.WeakReference
 import java.time.LocalDateTime
 import java.util.*
 
@@ -40,9 +45,9 @@ class AddPostActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityAddPostBinding
     private lateinit var auth : FirebaseAuth
-    private lateinit var user : User
     private lateinit var storageReference: StorageReference
     private lateinit var post :Post
+    private var imageLink: String = "tomal"
 
     var picChanged = false
 
@@ -50,7 +55,6 @@ class AddPostActivity : AppCompatActivity() {
 
 
     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-    var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
 
     // Req code to get permission of camera and gallery
     private val GALLERY_REQUEST_CODE = 1234
@@ -67,13 +71,25 @@ class AddPostActivity : AppCompatActivity() {
         binding = ActivityAddPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val dialog = ProgressDialog(this@AddPostActivity)
+
+        dialog.setCancelable(false)
+        dialog.setTitle("Post uploading")
+        dialog.setMessage("Please wait...")
+        dialog.setCanceledOnTouchOutside(false)
+
+
 
 
         binding.close.setOnClickListener() {
             finish()
         }
         binding.addPost.setOnClickListener{
+
+            dialog.show()
             addPostFirebase()
+//            dialog.dismiss()
+            finish()
         }
         binding.useCamera.setOnClickListener{
             selectCamera()
@@ -82,33 +98,87 @@ class AddPostActivity : AppCompatActivity() {
             selectGallery()
         }
 
+        activityResultLauncher  =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
+                if (result.resultCode== RESULT_OK) {
+
+                    var extras: Bundle? = result.data?.extras
+
+                    var imageUri: Uri
+
+                    var imageBitmap = extras?.get("data") as Bitmap
+
+                    var imageResult: WeakReference<Bitmap> = WeakReference(
+                        Bitmap.createScaledBitmap(
+                            imageBitmap, imageBitmap.width, imageBitmap.height, false
+                        ).copy(
+                            Bitmap.Config.RGB_565, true
+                        )
+                    )
+
+                    var bm = imageResult.get()
+
+                    imageUri = saveImage(bm, this)
+
+
+                    launchImageCrop(imageUri)
+
+                }
+
+                else{
+
+                }
+
+            }
+
 
 
     }
 
     private fun addPostFirebase() {
+
         if(currentUserID.isNotEmpty()) {
+
             if(binding.postTitle.toString().isNotEmpty() && binding.descriptionPost.toString().isNotEmpty())
             {
                 var time  = Date().toString()
                 if(picChanged)
                 {
                     uploadPostImage(time)
-
-                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString() ,currentUserID,time)
-                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).child(time).setValue(post)
+//                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
+//                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).push().setValue(post)
                 }
                 else{
 
                     post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),null ,currentUserID,time)
                     FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).child(time).setValue(post)
                 }
-//                ("Posts/" + FirebaseAuth.getInstance().currentUser!!.uid)
+
+            }
+            else{
+                Toast.makeText(this, "Fields are empty", Toast.LENGTH_SHORT).show()
             }
 
         }
         else{
             Toast.makeText(this, "Please Login First", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun uploadPostImage(time : String) {
+
+        storageReference = FirebaseStorage.getInstance().getReference().child("Posts").child(currentUserID).child(time)
+        storageReference.putFile(finalUri).addOnSuccessListener {
+//            imageLink =  storageReference.downloadUrl.toString()
+                storageReference.downloadUrl.addOnSuccessListener() {
+
+                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
+                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).child(time).setValue(post);
+                }
+        }.addOnFailureListener {
+            Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -120,16 +190,6 @@ class AddPostActivity : AppCompatActivity() {
         else{
             Toast.makeText(this, "Allow all permissions", Toast.LENGTH_SHORT).show()
             requestPermission()
-        }
-    }
-    private fun uploadPostImage(time : String) {
-
-        storageReference = FirebaseStorage.getInstance().getReference().child("Posts").child(currentUserID).child(time)
-        storageReference.putFile(finalUri).addOnSuccessListener {
-//            Toast.makeText(this, "Profile Updadggted", Toast.LENGTH_SHORT).show()
-            finish()
-        }.addOnFailureListener {
-            Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
         }
     }
     fun selectGallery(){

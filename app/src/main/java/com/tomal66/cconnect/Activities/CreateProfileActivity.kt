@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Activities
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -62,9 +63,19 @@ class CreateProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_profile)
         ButterKnife.bind(this)
 
+        val dialog = ProgressDialog(this@CreateProfileActivity)
+
+        dialog.setCancelable(false)
+        dialog.setTitle("Creating Profile")
+        dialog.setMessage("Please wait...")
+        dialog.setCanceledOnTouchOutside(false)
+
+
         val nextBtn : Button = findViewById(R.id.nextBtn)
         nextBtn.setOnClickListener(){
+            dialog.show()
             createPrimaryProfile()
+//            dialog.dismiss()
         }
 
         val c = Calendar.getInstance()
@@ -149,6 +160,7 @@ class CreateProfileActivity : AppCompatActivity() {
 
             }
         }
+
     }
 
     private fun saveUserInfo(user: User) {

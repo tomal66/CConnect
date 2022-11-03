@@ -2,6 +2,7 @@ package com.tomal66.cconnect.Activities
 
 import android.Manifest
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -49,7 +50,6 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var save : ImageView
     private lateinit var binding : ActivityEditProfileBinding
     private lateinit var auth : FirebaseAuth
-    private lateinit var dialog: AlertDialog.Builder
     private lateinit var user : User
     private lateinit var storageReference: StorageReference
 
@@ -85,6 +85,14 @@ class EditProfileActivity : AppCompatActivity() {
 
         showAllData()
 
+        val dialog = ProgressDialog(this@EditProfileActivity)
+
+        dialog.setCancelable(false)
+        dialog.setTitle("Profile updating")
+        dialog.setMessage("Please wait...")
+        dialog.setCanceledOnTouchOutside(false)
+
+
         val c = Calendar.getInstance()
         val date = DatePickerDialog.OnDateSetListener(){ view, year, month, dayOfMonth ->
             c.set(Calendar.YEAR, year)
@@ -100,8 +108,6 @@ class EditProfileActivity : AppCompatActivity() {
             DatePickerDialog(this, date, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
         }
 
-        dialog = AlertDialog.Builder(this).setMessage("Updating Profile...")
-            .setCancelable(false)
 
         checkPermission()
         requestPermission()
@@ -142,7 +148,9 @@ class EditProfileActivity : AppCompatActivity() {
             }
 
         binding.update.setOnClickListener{
+            dialog.show()
             updateData()
+//            dialog.dismiss()
             finish()
         }
         binding.changePictureButton.setOnClickListener{
@@ -273,7 +281,6 @@ class EditProfileActivity : AppCompatActivity() {
                             {
                                 Toast.makeText(this@EditProfileActivity, "Failed to update data",Toast.LENGTH_SHORT).show()
                             }
-                            //finish()
 
                         }
 
@@ -284,7 +291,7 @@ class EditProfileActivity : AppCompatActivity() {
                     {
                         addProfileImage()
                     }
-                    finish()
+                    //finish()
 
                 }
                 override fun onCancelled(error: DatabaseError) {

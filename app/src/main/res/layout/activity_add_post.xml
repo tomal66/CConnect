@@ -61,7 +61,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -77,7 +77,7 @@
             <EditText
                 android:id="@+id/descriptionPost"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="310dp"
                 android:layout_margin="5dp"
                 android:gravity="top"
                 android:hint="Want to say something?"
@@ -115,13 +115,6 @@
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/ic_gallery" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="5dp"
-                    android:hint="Date" />
             </LinearLayout>
 
         </LinearLayout>
