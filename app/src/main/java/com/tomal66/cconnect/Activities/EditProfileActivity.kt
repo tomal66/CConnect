@@ -413,16 +413,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun addProfileImage() {
+        private fun addProfileImage() {
 
-        storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
-        storageReference.putFile(finalUri).addOnSuccessListener {
-//            Toast.makeText(this, "Profile Updadggted", Toast.LENGTH_SHORT).show()
-            finish()
-        }.addOnFailureListener {
-            Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
+            storageReference = FirebaseStorage.getInstance().getReference("Users/" + FirebaseAuth.getInstance().currentUser!!.uid)
+            storageReference.putFile(finalUri).addOnSuccessListener {
+    //            Toast.makeText(this, "Profile Updadggted", Toast.LENGTH_SHORT).show()
+                finish()
+            }.addOnFailureListener {
+                Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
+            }
         }
-    }
 
 
     private fun launchImageCrop(uri: Uri) {
