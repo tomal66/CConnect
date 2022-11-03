@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Activities
 
 import android.Manifest
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -39,6 +40,7 @@ import java.util.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -82,6 +84,21 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         showAllData()
+
+        val c = Calendar.getInstance()
+        val date = DatePickerDialog.OnDateSetListener(){ view, year, month, dayOfMonth ->
+            c.set(Calendar.YEAR, year)
+            c.set(Calendar.MONTH, month)
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val format = "MM/dd/yy"
+            val sdf = SimpleDateFormat(format, Locale.US)
+            binding.editDOB.setText(sdf.format(c.time))
+        }
+
+        binding.editDOB.setOnClickListener(){
+            DatePickerDialog(this, date, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+        }
 
         dialog = AlertDialog.Builder(this).setMessage("Updating Profile...")
             .setCancelable(false)
@@ -178,7 +195,7 @@ class EditProfileActivity : AppCompatActivity() {
 
                     binding.editFirstName.setText(user.firstname )
                     binding.editLastName.setText( user.lastname )
-                    binding.editAge.setText(user.dob)
+                    binding.editDOB.setText(user.dob)
                     binding.editBio.setText(user.bio)
                     //binding.editGender.setSelection(3)
                     binding.editCountry.setText(user.country)
@@ -221,12 +238,12 @@ class EditProfileActivity : AppCompatActivity() {
                     user = snapshot.getValue(User::class.java)!!
 
 
-                    if (firstNameChanged() || lastNameChanged() || ageChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged() || picChanged) {
+                    if (firstNameChanged() || lastNameChanged() || DOBChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged() || picChanged) {
                         val user1 = User(user.username,
                             (binding.editFirstName.editableText.toString()+ " " + binding.editLastName.editableText.toString()).toLowerCase(),
                             binding.editFirstName.editableText.toString(),
                             binding.editLastName.editableText.toString(),
-                            binding.editAge.editableText.toString(),
+                            binding.editDOB.editableText.toString(),
                             binding.editGender.selectedItem.toString(),
                             binding.editInstitution.editableText.toString(),
                             binding.editDepartment.editableText.toString(),
@@ -477,8 +494,8 @@ class EditProfileActivity : AppCompatActivity() {
         return false
     }
 
-    private fun ageChanged(): Boolean {
-        if(!user.dob.equals(binding.editAge.editableText.toString()))
+    private fun DOBChanged(): Boolean {
+        if(!user.dob.equals(binding.editDOB.editableText.toString()))
         {
             return true
         }
