@@ -88,7 +88,10 @@ class MainActivity : AppCompatActivity() {
         bottomSheet.show(this)
         bottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
             when (id) {
-                R.id.bottomsheet_settings -> replaceFragment(OptionsFragment())
+                R.id.bottomsheet_settings -> {
+                    val intent = Intent(this, OptionsActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.bottomsheet_report -> sendEmail("intesar3006@gmail.com", "Application bug found by user","")
                 R.id.bottomsheet_logout -> logOut()
                 else -> Toast.makeText(this, "Nothing", Toast.LENGTH_SHORT).show()

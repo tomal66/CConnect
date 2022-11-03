@@ -4,20 +4,20 @@ data class User(var username : String? = null,
                 var fullName : String? = null,
                 var firstname : String? = null,
                 var lastname : String? = null,
-                var age : String? = null,
+                var dob : String? = null,
                 var gender : String? = null,
                 var institution : String? = null,
                 var department : String? = null,
                 var city : String? = null,
                 var country : String? = null,
                 var bio : String? = null,
-                var uid: String?= null) {
+                var uid: String?= null,
+                var posts : Int?= null,
+                var followers : Int?= null,
+                var following : Int?= null,
+                var personality : ArrayList<Int>?= null
 
-
-    var posts : Int = 0
-    var followers : Int = 0
-    var following : Int = 0
-
+) {
 
     /*constructor(username: String, firstname: String, lastname: String, age: String, gender: String,
                 institution: String, department: String, city: String, country: String)

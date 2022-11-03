@@ -1,9 +1,8 @@
 package com.tomal66.cconnect.Activities
 
 import android.Manifest
-import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.ContentValues
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -14,15 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.TextUtils
-import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -33,14 +26,9 @@ import butterknife.BindView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mazenrashed.MenuBottomSheet
-import com.tomal66.cconnect.Fragments.HomeFragment
-import com.tomal66.cconnect.Fragments.OptionsFragment
-import com.tomal66.cconnect.Fragments.ProfileFragment
 import com.tomal66.cconnect.Model.User
 //import com.rengwuxian.materialedittext.MaterialEditText
 import com.tomal66.cconnect.R
@@ -52,6 +40,7 @@ import java.util.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
 
 
 class EditProfileActivity : AppCompatActivity() {
@@ -95,6 +84,21 @@ class EditProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         showAllData()
+
+        val c = Calendar.getInstance()
+        val date = DatePickerDialog.OnDateSetListener(){ view, year, month, dayOfMonth ->
+            c.set(Calendar.YEAR, year)
+            c.set(Calendar.MONTH, month)
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            val format = "MM/dd/yy"
+            val sdf = SimpleDateFormat(format, Locale.US)
+            binding.editDOB.setText(sdf.format(c.time))
+        }
+
+        binding.editDOB.setOnClickListener(){
+            DatePickerDialog(this, date, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show()
+        }
 
         dialog = AlertDialog.Builder(this).setMessage("Updating Profile...")
             .setCancelable(false)
@@ -191,7 +195,7 @@ class EditProfileActivity : AppCompatActivity() {
 
                     binding.editFirstName.setText(user.firstname )
                     binding.editLastName.setText( user.lastname )
-                    binding.editAge.setText(user.age)
+                    binding.editDOB.setText(user.dob)
                     binding.editBio.setText(user.bio)
                     //binding.editGender.setSelection(3)
                     binding.editCountry.setText(user.country)
@@ -234,19 +238,23 @@ class EditProfileActivity : AppCompatActivity() {
                     user = snapshot.getValue(User::class.java)!!
 
 
-                    if (firstNameChanged() || lastNameChanged() || ageChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged() || picChanged) {
+                    if (firstNameChanged() || lastNameChanged() || DOBChanged() || bioChanged() || countryChanged() || cityChanged() || institutionChanged() || deptChanged() || GenderChanged() || picChanged) {
                         val user1 = User(user.username,
                             (binding.editFirstName.editableText.toString()+ " " + binding.editLastName.editableText.toString()).toLowerCase(),
                             binding.editFirstName.editableText.toString(),
                             binding.editLastName.editableText.toString(),
-                            binding.editAge.editableText.toString(),
+                            binding.editDOB.editableText.toString(),
                             binding.editGender.selectedItem.toString(),
                             binding.editInstitution.editableText.toString(),
                             binding.editDepartment.editableText.toString(),
                             binding.editCity.editableText.toString(),
                             binding.editCountry.editableText.toString(),
                             binding.editBio.editableText.toString(),
-                            user.uid
+                            user.uid,
+                            user.posts,
+                            user.followers,
+                            user.following,
+                            user.personality
                         )
 
 
@@ -486,8 +494,8 @@ class EditProfileActivity : AppCompatActivity() {
         return false
     }
 
-    private fun ageChanged(): Boolean {
-        if(!user.age.equals(binding.editAge.editableText.toString()))
+    private fun DOBChanged(): Boolean {
+        if(!user.dob.equals(binding.editDOB.editableText.toString()))
         {
             return true
         }

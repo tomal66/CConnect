@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,7 @@ class SearchFragment : Fragment() {
     private var recyclerView: RecyclerView?= null
     private var searchAdapter: SearchAdapter?= null
     private var mUser: MutableList<User>?= null
+    private var mAuth = FirebaseAuth.getInstance()
 
     @BindView(R.id.search_bar)
     lateinit var searchbar: EditText
@@ -87,9 +89,8 @@ class SearchFragment : Fragment() {
                 for(snapshot in dataSnapshot.children)
                 {
                     val user = snapshot.getValue(User::class.java)
-                    if(user!=null)
-                    {
-                        mUser?.add(user)
+                    if(mAuth.currentUser?.uid!= user?.uid){
+                        mUser?.add(user!!)
                     }
                 }
                 searchAdapter?.notifyDataSetChanged()

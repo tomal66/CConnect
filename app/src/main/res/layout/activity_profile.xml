@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
-    tools:context=".Fragments.ProfileFragment">
+    tools:context=".Activities.ProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,15 +28,6 @@
                     android:textColor="#000000"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/options"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_options"
-                    android:foreground="?android:attr/selectableItemBackground"/>
 
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
@@ -143,18 +133,19 @@
 
                     </LinearLayout>
 
-                    <Button
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/followBtn"
+                        style="@style/CustomChipStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="Follow"
+                        android:checked="false"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/edit_profile"
-                        android:text="Edit Profile"
-                        android:textAllCaps="false"
-                        android:background="@drawable/button"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginRight="60dp"
+                        android:textAlignment="center"
                         />
+
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

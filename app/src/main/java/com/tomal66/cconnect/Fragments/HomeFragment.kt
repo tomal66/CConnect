@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import com.tomal66.cconnect.Activities.AddPeopleActivity
 import com.tomal66.cconnect.Activities.ChatActivity
 import com.tomal66.cconnect.Activities.EditProfileActivity
 import com.tomal66.cconnect.R
@@ -23,6 +24,13 @@ class HomeFragment : Fragment() {
         val messages:ImageView = view.findViewById(R.id.messages)
         messages.setOnClickListener(){
             val intent = Intent(activity, ChatActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        val addPeople:ImageView = view.findViewById(R.id.add_people)
+        addPeople.setOnClickListener(){
+            val intent = Intent(activity, AddPeopleActivity::class.java)
             startActivity(intent)
         }
         // Inflate the layout for this fragment

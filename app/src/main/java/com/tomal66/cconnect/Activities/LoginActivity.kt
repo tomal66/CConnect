@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -21,10 +23,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var editUsername : EditText
     private lateinit var editPassword : EditText
     private lateinit var auth: FirebaseAuth
+    @BindView(R.id.forgotPwBtn)
+    lateinit var forgotPWBtn : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        ButterKnife.bind(this)
 
         // Initialize Firebase Auth
         auth = Firebase.auth
@@ -64,6 +69,11 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
 
+        }
+
+        forgotPWBtn.setOnClickListener(){
+            val intent = Intent(this, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         signUpBtn.setOnClickListener(){
