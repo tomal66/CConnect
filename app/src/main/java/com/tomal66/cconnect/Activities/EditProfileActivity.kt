@@ -254,7 +254,8 @@ class EditProfileActivity : AppCompatActivity() {
                             user.posts,
                             user.followers,
                             user.following,
-                            user.personality
+                            user.personality,
+                            user.interest
                         )
 
 

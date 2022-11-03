@@ -3,10 +3,11 @@ package com.tomal66.cconnect.Activities
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.text.TextUtils
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.chip.Chip
@@ -20,6 +21,17 @@ import com.tomal66.cconnect.R
 import java.io.File
 
 class ProfileActivity : AppCompatActivity() {
+    @BindView(R.id.about)
+    lateinit var aboutBtn : ImageButton
+
+    @BindView(R.id.recycler_view_posts)
+    lateinit var recycler_view_posts : RecyclerView
+
+    @BindView(R.id.aboutdata)
+    lateinit var aboutData : ScrollView
+
+    @BindView(R.id.all_posts)
+    lateinit var postsBtn : ImageButton
 
     @BindView(R.id.username)
     lateinit var username : TextView
@@ -44,6 +56,25 @@ class ProfileActivity : AppCompatActivity() {
 
     @BindView(R.id.followBtn)
     lateinit var followBtn : Chip
+
+    @BindView(R.id.department)
+    lateinit var department : TextView
+
+    @BindView(R.id.university)
+    lateinit var university : TextView
+
+    @BindView(R.id.city)
+    lateinit var city : TextView
+
+    @BindView(R.id.gender)
+    lateinit var gender : TextView
+
+    @BindView(R.id.dob)
+    lateinit var dob : TextView
+
+    @BindView(R.id.interests)
+    lateinit var interests : TextView
+
 
     private var user : User? = null
     private lateinit var storageReference: StorageReference
@@ -76,6 +107,16 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         })
+
+        aboutBtn.setOnClickListener(){
+            aboutData.visibility = View.VISIBLE
+            recycler_view_posts.visibility = View.GONE
+        }
+
+        postsBtn.setOnClickListener(){
+            aboutData.visibility = View.GONE
+            recycler_view_posts.visibility = View.VISIBLE
+        }
 
         followBtn.setOnClickListener(){
             if(followBtn.text.toString() == "Follow")
@@ -188,6 +229,13 @@ class ProfileActivity : AppCompatActivity() {
                     posts.setText(user!!.posts.toString())
                     followers.setText(user!!.followers.toString())
                     following.setText(user!!.following.toString())
+                    department.setText(user!!.department.toString())
+                    university.setText(user!!.institution.toString())
+                    city.setText(user!!.city + ", " + user!!.country)
+                    gender.setText(user!!.gender)
+                    dob.setText(user!!.dob)
+                    var res = user!!.interest?.let { TextUtils.join(", ", it) }
+                    interests.setText(res)
 
                     storageReference = FirebaseStorage.getInstance().reference.child("Users/$currentUserID")
 
