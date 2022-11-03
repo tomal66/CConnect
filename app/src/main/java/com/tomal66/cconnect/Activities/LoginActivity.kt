@@ -1,5 +1,6 @@
 package com.tomal66.cconnect.Activities
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -39,8 +40,17 @@ class LoginActivity : AppCompatActivity() {
         editUsername = findViewById(R.id.editUsername)
         editPassword = findViewById(R.id.editPassword)
 
+        val dialog = ProgressDialog(this@LoginActivity)
+
+        dialog.setCancelable(false)
+        dialog.setTitle("Logging in")
+        dialog.setMessage("Please wait...")
+        dialog.setCanceledOnTouchOutside(false)
+
+
         loginBtn.setOnClickListener(){
 
+            dialog.show()
             val sEmail = editUsername.text.toString().trim()
             val sPassword = editPassword.text.toString().trim()
             
@@ -68,6 +78,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
             }
+            dialog.dismiss()
 
         }
 

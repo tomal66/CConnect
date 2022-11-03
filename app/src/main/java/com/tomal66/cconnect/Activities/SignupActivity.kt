@@ -1,5 +1,6 @@
 package com.tomal66.cconnect.Activities
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,14 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        val dialog = ProgressDialog(this@SignupActivity)
+
+        dialog.setCancelable(false)
+        dialog.setTitle("Signing up")
+        dialog.setMessage("Please wait...")
+        dialog.setCanceledOnTouchOutside(false)
+
+
         // Initialize Firebase Auth
         auth = Firebase.auth
         editUsername = findViewById(R.id.editUsername)
@@ -37,7 +46,7 @@ class SignupActivity : AppCompatActivity() {
         signInBtn = findViewById(R.id.signInBtn)
 
         nextBtn.setOnClickListener(){
-
+            dialog.show()
             if(editPassword.text.toString()==editConfirmPassword.text.toString())
             {
                 val sEmail = editUsername.text.toString().trim()
@@ -61,9 +70,9 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(baseContext, "Passwords don't match.",
                     Toast.LENGTH_SHORT).show()
             }
+//            dialog.dismiss()
 
-
-
+//            dialog.dismiss()
             /*val intent = Intent(this, CreateProfileActivity::class.java)
             startActivity(intent)*/
         }
