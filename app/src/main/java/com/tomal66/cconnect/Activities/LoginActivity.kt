@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
             }
-            dialog.dismiss()
+//            dialog.dismiss()
 
         }
 
