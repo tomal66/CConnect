@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -31,6 +32,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Activities.EditProfileActivity
 import com.tomal66.cconnect.Activities.MainActivity
+import com.tomal66.cconnect.Adapter.MyPostAdapter
+import com.tomal66.cconnect.Adapter.PostAdapter
+import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
 import org.w3c.dom.Text
@@ -97,6 +101,11 @@ class ProfileFragment : Fragment() {
     private lateinit var storageReference: StorageReference
     private lateinit var imageUri : Uri
 
+    private var postAdapter: PostAdapter? = null
+    private var postList: MutableList<Post>? = null
+    val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -124,12 +133,55 @@ class ProfileFragment : Fragment() {
             recycler_view_posts.visibility = View.VISIBLE
         }
 
+        var recyclerView: RecyclerView? = null
+        recyclerView = view.findViewById(R.id.recycler_view_posts)
+
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        recyclerView.layoutManager = linearLayoutManager
+
+        postList = ArrayList()
+        postAdapter = context?.let { PostAdapter(it,postList as ArrayList<Post>) }
+        recyclerView.adapter = postAdapter
+
+        retrievePosts()
+
+
         optionsBtn.setOnClickListener(){
             (activity as MainActivity).showBottomSheet()
         }
 
         return view
     }
+    private fun retrievePosts() {
+        val postsRef = FirebaseDatabase.getInstance().reference
+            .child("Posts")
+
+        postsRef.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                postList?.clear()
+
+                for (po in snapshot.children)
+                {
+                    val post = po.getValue(Post:: class.java)
+
+                    if (post != null) {
+                        if(post.postedBy.equals(currentUserID)) {
+                            postList!!.add(post)
+                        }
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+    }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
