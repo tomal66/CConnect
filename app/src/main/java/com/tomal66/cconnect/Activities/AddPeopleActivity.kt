@@ -52,12 +52,13 @@ class AddPeopleActivity : AppCompatActivity() {
 
                 for(postSnapshot in snapshot.children)
                 {
-                    Log.d(TAG,postSnapshot.key.toString())
+
                     usersRef.child(postSnapshot.key.toString()).addValueEventListener(object: ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
                             var user = snapshot.getValue(User::class.java)!!
                             if(mAuth.currentUser?.uid!= user.uid){
                                 mUser?.add(user)
+                                Log.d(TAG,postSnapshot.key.toString())
                                 addPeopleAdapter!!.notifyDataSetChanged()
                             }
 
@@ -79,5 +80,29 @@ class AddPeopleActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    private fun follows(uid: String?): Boolean {
+        var currentUID = mAuth.currentUser!!.uid
+        var flag = false
+        val followRef = FirebaseDatabase.getInstance().getReference().child("Follow").child(currentUID).child("Following")
+        followRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(postSnapshot in snapshot.children)
+                {
+                    if(postSnapshot.key.toString()==uid)
+                    {
+                        flag = true
+                        break
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+        return flag
     }
 }
