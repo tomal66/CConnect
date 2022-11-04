@@ -3,8 +3,12 @@ package com.tomal66.cconnect.Adapter
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.media.Image
+import android.nfc.Tag
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,10 +19,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
+import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
@@ -43,8 +49,9 @@ class PostAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
         firebaseUser = FirebaseAuth.getInstance().currentUser
-
+        holder.postImage.visibility = GONE
         val post = mPost[position]
 
         // post er chobi dekhabe
@@ -54,6 +61,7 @@ class PostAdapter
 
             val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
             holder.postImage.setImageBitmap(bitmap)
+            holder.postImage.visibility = VISIBLE
         }.addOnFailureListener{
 
         }
@@ -61,6 +69,24 @@ class PostAdapter
         holder.postTitle.text = post.title
         holder.postDescription.text = post.description
 
+        isLiked(post.pid!!, holder.likeBtn)
+        nrLikes(holder.likes,post.pid!!)
+
+        holder.likeBtn.setOnClickListener(){
+
+            if(holder.likeBtn.getTag().equals("like")){
+
+                FirebaseDatabase.getInstance().getReference().child("Likes").child(post.pid!!)
+                    .child(currentUser!!.uid).setValue(true)
+                Log.d(TAG, "Clicked")
+
+            }
+            else
+            {
+                FirebaseDatabase.getInstance().getReference().child("Likes").child(post.pid!!)
+                    .child(currentUser!!.uid).removeValue()
+            }
+        }
 
 
         val usersRef = FirebaseDatabase.getInstance().reference.child("Users").child(post.postedBy.toString())
@@ -110,6 +136,48 @@ class PostAdapter
         var postTitle: TextView = itemView.findViewById(R.id.postTitle)
         var postDescription: TextView = itemView.findViewById(R.id.postDescription)
         var likes: TextView = itemView.findViewById(R.id.likes)
+    }
+
+    private fun isLiked(pid: String, iv: ImageView)
+    {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val ref = FirebaseDatabase.getInstance().getReference().child("Likes").child(pid)
+        ref.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child(currentUser!!.uid).exists()){
+                    iv.setImageResource(R.drawable.ic_liked)
+                    iv.tag = "liked"
+                }
+                else
+                {
+                    iv.setImageResource(R.drawable.ic_like)
+                    iv.tag = "like"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
+
+    private fun nrLikes(likes: TextView, pid: String)
+    {
+        val ref = FirebaseDatabase.getInstance().getReference().child("Likes").child(pid)
+
+        ref.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                likes.text = snapshot.childrenCount.toString() + " bolts"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
     }
 
 

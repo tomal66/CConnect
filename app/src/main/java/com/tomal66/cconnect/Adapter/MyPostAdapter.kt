@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,7 +44,7 @@ class MyPostAdapter(private val mContext: Context,
 
     override fun onBindViewHolder(holder: MyPostAdapter.ViewHolder, position: Int) {
         firebaseUser = FirebaseAuth.getInstance().currentUser
-
+        holder.postImage.visibility = GONE
         val post = mPost[position]
 
         // post er chobi dekhabe
@@ -53,6 +55,7 @@ class MyPostAdapter(private val mContext: Context,
 
             val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
             holder.postImage.setImageBitmap(bitmap)
+            holder.postImage.visibility = VISIBLE
         }.addOnFailureListener{
 
         }
@@ -106,6 +109,7 @@ class MyPostAdapter(private val mContext: Context,
         var postTitle: TextView = itemView.findViewById(R.id.post_Title)
         var postDescription: TextView = itemView.findViewById(R.id.post_Description)
         var likes: TextView = itemView.findViewById(R.id.likes)
+
     }
 
 }

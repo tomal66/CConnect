@@ -96,24 +96,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.ChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.NewMessageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.AddPostActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.InterestsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.EditProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.PersonalityTestActivity"
-            android:exported="true" />
-        <activity
             android:name=".Activities.CreateProfileActivity"
             android:exported="true">
 
