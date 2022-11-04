@@ -14,6 +14,7 @@ import butterknife.ButterKnife
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.tomal66.cconnect.R
 
@@ -56,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
             
             if(sEmail.isEmpty() || sPassword.isEmpty())
             {
+                dialog.dismiss()
                 Toast.makeText(baseContext, "Fields cannot be empty!",
                     Toast.LENGTH_SHORT).show()
             }
@@ -66,11 +68,12 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
+                            dialog.dismiss()
                             updateUI()
                         } else {
                             // If sign in fails, display a message to the user.
 
-                            
+                            dialog.dismiss()
                             Toast.makeText(baseContext, "Wrong Email or Password!",
 
                                 Toast.LENGTH_SHORT).show()
@@ -105,10 +108,8 @@ class LoginActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            updateUI()
-        }
+
+
     }
 
 

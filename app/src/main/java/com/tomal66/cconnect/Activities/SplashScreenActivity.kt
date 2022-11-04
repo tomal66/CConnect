@@ -8,20 +8,28 @@ import android.widget.ImageView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.tomal66.cconnect.R
 
 class SplashScreenActivity : AppCompatActivity() {
     private lateinit var logo : ImageView
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        auth = Firebase.auth
         logo = findViewById(R.id.logo)
         logo.alpha = 0f
         logo.animate().setDuration(2000).alpha(1f).withEndAction {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            onStart()
+            //finish()
         }
         // FireBase App check token for debugging
         FirebaseApp.initializeApp(/*context=*/this)
@@ -29,5 +37,49 @@ class SplashScreenActivity : AppCompatActivity() {
         firebaseAppCheck.installAppCheckProviderFactory(
             DebugAppCheckProviderFactory.getInstance()
         )
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        val currentUser = auth.currentUser
+
+
+        if(currentUser != null  ){
+            val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser!!.uid)
+
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if (snapshot.getValue()==null) {
+                        val intent = Intent(this@SplashScreenActivity, CreateProfileActivity::class.java)
+                        finish()
+                        startActivity(intent)
+
+                    }
+                    else{
+                        updateUI()
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+
+
+        }
+        else{
+            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+            finish()
+            startActivity(intent)
+
+        }
+    }
+    private fun updateUI() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

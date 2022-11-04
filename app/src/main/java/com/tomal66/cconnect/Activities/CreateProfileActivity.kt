@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
@@ -58,22 +59,25 @@ class CreateProfileActivity : AppCompatActivity() {
     private lateinit var storageReference: StorageReference
     private lateinit var imageUri : Uri
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_profile)
         ButterKnife.bind(this)
 
-        val dialog = ProgressDialog(this@CreateProfileActivity)
+        val dialog = ProgressDialog(this)
 
         dialog.setCancelable(false)
         dialog.setTitle("Creating Profile")
         dialog.setMessage("Please wait...")
         dialog.setCanceledOnTouchOutside(false)
 
-
         val nextBtn : Button = findViewById(R.id.nextBtn)
         nextBtn.setOnClickListener(){
             dialog.show()
+            Handler().postDelayed({dialog.dismiss()},2000)
             createPrimaryProfile()
 //            dialog.dismiss()
         }
@@ -133,6 +137,7 @@ class CreateProfileActivity : AppCompatActivity() {
         var country : String = editCountry.text.toString()
 
         when{
+
             TextUtils.isEmpty(username) -> Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
             TextUtils.isEmpty(firstname) -> Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
             TextUtils.isEmpty(lastname) -> Toast.makeText(this, "Fields cannot be empty!", Toast.LENGTH_LONG).show()
@@ -160,6 +165,7 @@ class CreateProfileActivity : AppCompatActivity() {
 
             }
         }
+//        dialog.dismiss()
 
     }
 
@@ -172,6 +178,7 @@ class CreateProfileActivity : AppCompatActivity() {
             if(it.isSuccessful)
             {
                 addProfileImage()
+
                 val intent = Intent(this, PersonalityTestActivity::class.java)
                 startActivity(intent)
             }
