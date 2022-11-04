@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.MotionEvent
-import android.view.View
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -24,20 +21,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Model.Post
-import com.tomal66.cconnect.Model.User
-import com.tomal66.cconnect.R
 import com.tomal66.cconnect.databinding.ActivityAddPostBinding
-import com.tomal66.cconnect.databinding.ActivityEditProfileBinding
 import com.yalantis.ucrop.UCrop
 import java.io.*
 import java.lang.ref.WeakReference
-import java.time.LocalDateTime
 import java.util.*
 
 class AddPostActivity : AppCompatActivity() {
@@ -86,7 +77,7 @@ class AddPostActivity : AppCompatActivity() {
         }
         binding.addPost.setOnClickListener{
 
-            dialog.show()
+//            dialog.show()
             addPostFirebase()
 //            dialog.dismiss()
             finish()
@@ -139,21 +130,32 @@ class AddPostActivity : AppCompatActivity() {
     private fun addPostFirebase() {
 
         if(currentUserID.isNotEmpty()) {
+            val postRef = FirebaseDatabase.getInstance().getReference("Posts")
 
             if(binding.postTitle.toString().isNotEmpty() && binding.descriptionPost.toString().isNotEmpty())
             {
                 var time  = Date().toString()
+                val postID = postRef.push().key
                 if(picChanged)
                 {
-                    uploadPostImage(time)
-//                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
-//                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).push().setValue(post)
+                    storageReference = FirebaseStorage.getInstance().getReference().child("Posts")
+
+
+                    storageReference.child(postID.toString()).putFile(finalUri).addOnSuccessListener {
+
+                    }
+
+                    post = Post(postID,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
+
+
+
                 }
                 else{
 
-                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),null ,currentUserID,time)
-                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).child(time).setValue(post)
+                    post = Post(postID,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),null ,currentUserID,time)
+
                 }
+                postRef.child(postID.toString()).setValue(post)
 
             }
             else{
@@ -167,20 +169,6 @@ class AddPostActivity : AppCompatActivity() {
 
     }
 
-    private fun uploadPostImage(time : String) {
-
-        storageReference = FirebaseStorage.getInstance().getReference().child("Posts").child(currentUserID).child(time)
-        storageReference.putFile(finalUri).addOnSuccessListener {
-//            imageLink =  storageReference.downloadUrl.toString()
-                storageReference.downloadUrl.addOnSuccessListener() {
-
-                    post = Post(time,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
-                    FirebaseDatabase.getInstance().getReference("Posts").child(currentUserID).child(time).setValue(post);
-                }
-        }.addOnFailureListener {
-            Toast.makeText(this, "Failed to upload image",Toast.LENGTH_SHORT).show()
-        }
-    }
 
     fun selectCamera()
     {
@@ -221,8 +209,8 @@ class AddPostActivity : AppCompatActivity() {
 
     private fun saveEditedImage() {
         val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, finalUri)
-        saveMediaToStorage(bitmap)
-
+//        saveMediaToStorage(bitmap)
+//
     }
     private fun saveImage(image: Bitmap?, context: android.content.Context): Uri {
 
@@ -314,11 +302,10 @@ class AddPostActivity : AppCompatActivity() {
         var destination:String=StringBuilder(UUID.randomUUID().toString()).toString()
         var options:UCrop.Options=UCrop.Options()
 
-        //image Compression
 
-        options.setCompressionQuality(100);
+        options.setCompressionQuality(50)
+
         options.setMaxBitmapSize(1000);
-
 
 
         UCrop.of(Uri.parse(uri.toString()), Uri.fromFile(File(cacheDir,destination)))

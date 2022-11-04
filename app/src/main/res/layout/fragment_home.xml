@@ -35,7 +35,6 @@
                     android:layout_marginRight="50dp"
                     android:src="@drawable/ic_add_people"
 
-
                     />
 
                 <ImageView
@@ -74,7 +73,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:id="@+id/postRecyclerView"/>
 
             </RelativeLayout>
 
@@ -84,11 +84,6 @@
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/statusLayout"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:layout_below="@id/view"/>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
