@@ -13,7 +13,9 @@ import com.tomal66.cconnect.Adapter.NewMessageAdapter
 import com.tomal66.cconnect.Adapter.SearchAdapter
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
-
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.Item
 
 class NewMessageActivity : AppCompatActivity() {
 
@@ -36,7 +38,7 @@ class NewMessageActivity : AppCompatActivity() {
         newMessageAdapter = NewMessageAdapter(this, mUser as ArrayList<User>)
         recyclerview_NewMessage?.adapter = newMessageAdapter
 
-        usersRef.addValueEventListener( object : ValueEventListener{
+        usersRef.addValueEventListener( object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 mUser?.clear()
                 for(postSnapshot in snapshot.children){
@@ -56,4 +58,3 @@ class NewMessageActivity : AppCompatActivity() {
         })
     }
 }
-

@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import com.tomal66.cconnect.Activities.ChatLogActivity
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
 import org.jetbrains.annotations.NotNull
@@ -59,6 +56,16 @@ class NewMessageAdapter(private var mContext: Context,
 
         holder.fullName.text = user.firstname + " " + user.lastname
         Picasso.get().load(user.uid).placeholder(R.drawable.default_user).into(holder.imageView)
+        holder.fullName.setOnClickListener{
+            val intent = Intent(mContext, ChatLogActivity::class.java)
+            intent.putExtra("name", user.firstname + user.lastname)
+            intent.putExtra("uid", user.uid)
+            mContext.startActivity(intent);
+
+           //finish()
+            //manifest kichu mal change kore dekhte paro error ashle
+            //check time around 7mins 50 secs
+        }
     }
 
 
