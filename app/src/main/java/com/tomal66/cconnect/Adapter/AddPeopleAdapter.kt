@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
@@ -19,17 +18,13 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import com.tomal66.cconnect.Activities.ProfileActivity
-import com.tomal66.cconnect.Fragments.SearchFragment
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
 import org.jetbrains.annotations.NotNull
-import org.w3c.dom.Text
 import java.io.File
 
-class SearchAdapter(private var mContext: Context,
-                    private var userList: ArrayList<User>,
-                    private var isFragment: Boolean = false): RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
-
+class AddPeopleAdapter (private var mContext: Context,
+                        private var userList: ArrayList<User>): RecyclerView.Adapter<AddPeopleAdapter.ViewHolder>() {
 
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -37,8 +32,9 @@ class SearchAdapter(private var mContext: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext).inflate(R.layout.user_item_layout, parent, false)
-        return SearchAdapter.ViewHolder(view)
+        return AddPeopleAdapter.ViewHolder(view)
     }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = userList[position]
@@ -64,7 +60,8 @@ class SearchAdapter(private var mContext: Context,
         checkFollowingStatus(user.uid, holder.followBtn)
 
 
-        usersRef.child(firebaseUser?.uid.toString()).addValueEventListener(object : ValueEventListener {
+        usersRef.child(firebaseUser?.uid.toString()).addValueEventListener(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 currUser = snapshot.getValue(User::class.java)!!
 
