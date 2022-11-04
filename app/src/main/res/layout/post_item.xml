@@ -49,10 +49,18 @@
                         android:text="username"
                         android:textSize="15sp"
                         android:textStyle="bold"
-
                         android:capitalize="words"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/user_Image"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/threeDot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_more_vert"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -111,12 +119,7 @@
                             android:layout_height="30dp"
                             android:src="@drawable/ic_like" />
 
-                        <ImageView
-                            android:id="@+id/threeDot"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ic_more_vert" />
+
 
                     </LinearLayout>
 

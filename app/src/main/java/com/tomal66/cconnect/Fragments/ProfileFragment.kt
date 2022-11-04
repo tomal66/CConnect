@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,29 +14,21 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.tomal66.cconnect.Activities.EditProfileActivity
 import com.tomal66.cconnect.Activities.MainActivity
-import com.tomal66.cconnect.Adapter.MyPostAdapter
 import com.tomal66.cconnect.Adapter.PostAdapter
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
-import org.w3c.dom.Text
 import java.io.File
 
 
