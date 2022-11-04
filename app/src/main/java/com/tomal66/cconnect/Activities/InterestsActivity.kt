@@ -1,16 +1,21 @@
 package com.tomal66.cconnect.Activities
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
+import java.io.File
+import java.lang.Math.abs
 
 class InterestsActivity : AppCompatActivity() {
     @BindView(R.id.chip1)
@@ -73,9 +78,47 @@ class InterestsActivity : AppCompatActivity() {
         doneBtn = findViewById(R.id.doneBtn)
         doneBtn.setOnClickListener(){
             setData()
+            calculateDistance()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun calculateDistance() {
+
+        var usersRef = FirebaseDatabase.getInstance().getReference().child("Users")
+        usersRef.addValueEventListener(object : ValueEventListener{
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(snapshot in dataSnapshot.children)
+                {
+                    val userC = snapshot.getValue(User::class.java)
+                    if(userC!=null)
+                    {
+                        writeValue(userC)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+    private fun writeValue(userC: User)
+    {
+        var res = 0
+
+        for(i in user.personality?.indices!!)
+        {
+            res+= abs(user.personality!![i] - userC.personality!![i])
+        }
+
+        var compRef = FirebaseDatabase.getInstance().getReference().child("Compitability")
+
+        compRef.child(user.uid!!).child(userC.uid!!).setValue(res)
+        compRef.child(userC.uid!!).child(user.uid!!).setValue(res)
     }
 
     private fun setData() {
