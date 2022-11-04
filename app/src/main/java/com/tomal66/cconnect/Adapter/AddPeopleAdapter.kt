@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -58,7 +60,7 @@ class AddPeopleAdapter (private var mContext: Context,
         holder.city.text = user.city
         Picasso.get().load(user.uid).placeholder(R.drawable.default_user).into(holder.profileImage)
 
-        checkFollowingStatus(user.uid, holder.followBtn)
+        checkFollowingStatus(user.uid, holder.followBtn, position, holder)
 
 
         usersRef.child(firebaseUser?.uid.toString()).addValueEventListener(object :
@@ -82,8 +84,8 @@ class AddPeopleAdapter (private var mContext: Context,
 
 
 
-
         holder.followBtn.setOnClickListener(){
+            removeAt(position)
             if(holder.followBtn.text.toString() == "Follow")
             {
                 firebaseUser?.uid.let { it1 ->
@@ -169,11 +171,12 @@ class AddPeopleAdapter (private var mContext: Context,
 
     }
 
-    private fun checkFollowingStatus(uid: String?, followBtn: Chip) {
+    private fun checkFollowingStatus(uid: String?, followBtn: Chip, position: Int, holder: ViewHolder) {
         val followingRef = firebaseUser?.uid.let { it1 ->
             FirebaseDatabase.getInstance().getReference()
                 .child("Follow").child(it1.toString())
                 .child("Following")
+
         }
 
         followingRef.addValueEventListener(object : ValueEventListener {
@@ -182,6 +185,7 @@ class AddPeopleAdapter (private var mContext: Context,
                 {
                     followBtn.text = "Following"
                     followBtn.isChecked = true
+                    //removeAt(position)
                 }
                 else
                 {
@@ -194,6 +198,13 @@ class AddPeopleAdapter (private var mContext: Context,
 
             }
         })
+    }
+
+    fun removeAt(position: Int) {
+        userList.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, userList.size)
+
     }
 
 }
