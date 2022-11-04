@@ -37,6 +37,7 @@ class AddPeopleAdapter (private var mContext: Context,
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //holder.priceGroup.removeAllViews()
         val user = userList[position]
         var storageReference: StorageReference = FirebaseStorage.getInstance().reference.child("Users/${user.uid}")
 
