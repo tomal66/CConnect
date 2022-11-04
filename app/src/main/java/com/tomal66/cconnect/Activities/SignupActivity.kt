@@ -57,9 +57,12 @@ class SignupActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             val user = auth.currentUser
+
+                            dialog.dismiss()
                             updateUI(user)
                         } else {
                             // If sign in fails, display a message to the user.
+                            dialog.dismiss()
                             Toast.makeText(baseContext, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
 //                            updateUI(null)
@@ -67,14 +70,10 @@ class SignupActivity : AppCompatActivity() {
                     }
             }
             else {
+                dialog.dismiss()
                 Toast.makeText(baseContext, "Passwords don't match.",
                     Toast.LENGTH_SHORT).show()
             }
-//            dialog.dismiss()
-
-//            dialog.dismiss()
-            /*val intent = Intent(this, CreateProfileActivity::class.java)
-            startActivity(intent)*/
         }
         signInBtn.setOnClickListener(){
             val intent = Intent(this, LoginActivity::class.java)

@@ -145,14 +145,14 @@ class AddPostActivity : AppCompatActivity() {
 
                     }
 
-                    post = Post(postID,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
+                    post = Post(postID.toString(),binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),finalUri.toString(),currentUserID,time)
 
 
 
                 }
                 else{
 
-                    post = Post(postID,binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),null ,currentUserID,time)
+                    post = Post(postID.toString(),binding.postTitle.text.toString(),binding.descriptionPost.text.toString(),null ,currentUserID,time)
 
                 }
                 postRef.child(postID.toString()).setValue(post)
