@@ -49,7 +49,7 @@ class SearchAdapter(private var mContext: Context,
         var matchscore: Int = 0
         var ref = FirebaseDatabase.getInstance().getReference().child("Compitability").child(firebaseUser!!.uid)
         ref.child(user.uid!!).get().addOnSuccessListener {
-            matchscore = (it.value as Long).toInt()
+            matchscore = (it.value as? Long)!!.toInt()
             ObjectAnimator.ofInt(holder.progressBar, "progress", 72-matchscore)
                 .setDuration(500)
                 .start()
