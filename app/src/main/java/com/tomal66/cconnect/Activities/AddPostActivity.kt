@@ -315,9 +315,9 @@ class AddPostActivity : AppCompatActivity() {
         var options:UCrop.Options=UCrop.Options()
 
 
-        options.setCompressionQuality(50)
+        options.setCompressionQuality(100)
 
-        options.setMaxBitmapSize(1000);
+        options.setMaxBitmapSize(2000);
 
 
         UCrop.of(Uri.parse(uri.toString()), Uri.fromFile(File(cacheDir,destination)))
