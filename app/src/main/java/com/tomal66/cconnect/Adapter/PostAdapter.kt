@@ -69,6 +69,7 @@ class PostAdapter
         val localFile = File.createTempFile("tempImage","jpg")
         storageReference.child("${post.pid}").getFile(localFile).addOnSuccessListener {
 
+            //oh
             val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
             holder.postImage.setImageBitmap(bitmap)
             holder.postImage.visibility = VISIBLE
