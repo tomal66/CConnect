@@ -28,6 +28,7 @@ import com.mazenrashed.MenuBottomSheet
 import com.squareup.picasso.Picasso
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Activities.MainActivity
+import com.tomal66.cconnect.Model.Notification
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
@@ -60,6 +61,7 @@ class PostAdapter
         val currentUser = FirebaseAuth.getInstance().currentUser
         firebaseUser = FirebaseAuth.getInstance().currentUser
         holder.postImage.visibility = GONE
+
         val post = mPost[position]
 
         // post er chobi dekhabe
@@ -88,11 +90,15 @@ class PostAdapter
                     .child(currentUser!!.uid).setValue(true)
                 Log.d(TAG, "Clicked")
 
+                val notification = Notification(currentUser!!.uid," liked your post",post.pid!!)
+                FirebaseDatabase.getInstance().getReference().child("Notifications").child(post.postedBy.toString()).push().setValue(notification)
+
             }
             else
             {
                 FirebaseDatabase.getInstance().getReference().child("Likes").child(post.pid!!)
                     .child(currentUser!!.uid).removeValue()
+
             }
         }
 
@@ -105,8 +111,9 @@ class PostAdapter
 
                     val user = snapshot.getValue(User::class.java)!!
 
-                    val storageReference = FirebaseStorage.getInstance().reference.child("Users/${post.postedBy.toString()}")
+                    // user image positioning
 
+                    val storageReference = FirebaseStorage.getInstance().reference.child("Users/${post.postedBy.toString()}")
 
                     val localFile = File.createTempFile("tempImage2","jpg")
 
@@ -116,8 +123,10 @@ class PostAdapter
 
                         holder.profileImage?.setImageBitmap(bitmap)
                     }.addOnFailureListener{
+
                     }
 
+                    // username positioning
                     if (user != null) {
                         holder.userName?.text = user.firstname+" "+user.lastname
                     }
