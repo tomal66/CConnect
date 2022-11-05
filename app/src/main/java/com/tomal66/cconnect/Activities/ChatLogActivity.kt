@@ -36,8 +36,9 @@ class ChatLogActivity : AppCompatActivity() {
     lateinit var fullName: TextView
 
     private lateinit var recyclerview_chat_log : RecyclerView
-    private lateinit var send_button_chat_log : Button
+    private lateinit var send_button_chat_log : ImageView
     private lateinit var edittext_chat_log : EditText
+    private lateinit var backBtn: ImageView
 
     //    private lateinit var textview_from_row : Text
 //    private lateinit var textview_to_row : Text
@@ -47,6 +48,8 @@ class ChatLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
         ButterKnife.bind(this)
+
+        backBtn = findViewById(R.id.back)
 
         fromId = FirebaseAuth.getInstance().uid!!
 
@@ -66,6 +69,10 @@ class ChatLogActivity : AppCompatActivity() {
         send_button_chat_log.setOnClickListener{
             Log.d(TAG, "Attempt to send message...")
             performSendMessage()
+        }
+
+        backBtn.setOnClickListener(){
+            onBackPressed()
         }
     }
 
