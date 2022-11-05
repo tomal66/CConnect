@@ -26,8 +26,6 @@ class SplashScreenActivity : AppCompatActivity() {
         logo.alpha = 0f
         logo.animate().setDuration(2000).alpha(1f).withEndAction {
 
-
-
             val currentUser = auth.currentUser
 
 
@@ -45,25 +43,19 @@ class SplashScreenActivity : AppCompatActivity() {
                         }
                         else{
                             updateUI()
-
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
                         TODO("Not yet implemented")
                     }
                 })
-
-
             }
+
             else{
-            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-
-            startActivity(intent)
-
-            finish()
-
+                val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                startActivity(intent)
+                finish()
             }
 
         }
@@ -77,11 +69,7 @@ class SplashScreenActivity : AppCompatActivity() {
         )
     }
 
-    public override fun onStart() {
-        super.onStart()
 
-
-    }
     private fun updateUI() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
