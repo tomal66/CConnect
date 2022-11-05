@@ -23,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.mazenrashed.MenuBottomSheet
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Activities.MainActivity
+import com.tomal66.cconnect.Model.Notification
 import com.tomal66.cconnect.Activities.ProfileActivity
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
@@ -68,6 +69,7 @@ class PostAdapter
         val localFile = File.createTempFile("tempImage","jpg")
         storageReference.child("${post.pid}").getFile(localFile).addOnSuccessListener {
 
+            //oh
             val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
             holder.postImage.setImageBitmap(bitmap)
             holder.postImage.visibility = VISIBLE
@@ -89,11 +91,15 @@ class PostAdapter
                     .child(currentUser!!.uid).setValue(true)
                 Log.d(TAG, "Clicked")
 
+                val notification = Notification(currentUser!!.uid," liked your post",post.pid!!)
+                FirebaseDatabase.getInstance().getReference().child("Notifications").child(post.postedBy.toString()).push().setValue(notification)
+
             }
             else
             {
                 FirebaseDatabase.getInstance().getReference().child("Likes").child(post.pid!!)
                     .child(currentUser!!.uid).removeValue()
+
             }
         }
 
@@ -117,8 +123,10 @@ class PostAdapter
 
                         holder.profileImage?.setImageBitmap(bitmap)
                     }.addOnFailureListener{
+
                     }
 
+                    // username positioning
                     if (user != null) {
                         holder.userName?.text = user.firstname+" "+user.lastname
                     }

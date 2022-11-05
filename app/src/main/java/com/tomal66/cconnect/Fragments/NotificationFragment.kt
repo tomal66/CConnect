@@ -13,7 +13,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Adapter.NotificationAdapter
 import com.tomal66.cconnect.Adapter.PostAdapter
 import com.tomal66.cconnect.Model.Notification
@@ -26,6 +25,8 @@ class NotificationFragment : Fragment() {
 
     private var notificationAdapter: NotificationAdapter? = null
     private var notificationList: MutableList<Notification>? = null
+
+    companion object val TAG = "aaa"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,13 +61,14 @@ class NotificationFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 notificationList?.clear()
 
-                for (noti in snapshot.children)
+                for (notification in snapshot.children)
                 {
-                    val noti1 = noti.getValue(Notification::class.java)
+                    Log.d(TAG,notification.key!!)
+                    val noti1 = notification.getValue(Notification:: class.java)
 
                     noti1?.let { notificationList?.add(it) }
-                    Log.d(TAG, "works")
 
+                    notificationAdapter!!.notifyDataSetChanged()
                 }
             }
 

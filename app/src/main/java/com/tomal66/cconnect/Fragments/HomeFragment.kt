@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
             val intent = Intent(activity, ChatActivity::class.java)
             startActivity(intent)
         }
+
         // Recycler View
         var recyclerView: RecyclerView? = null
         recyclerView = view.findViewById(R.id.postRecyclerView)
