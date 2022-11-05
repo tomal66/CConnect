@@ -25,59 +25,52 @@ class SplashScreenActivity : AppCompatActivity() {
         logo = findViewById(R.id.logo)
         logo.alpha = 0f
         logo.animate().setDuration(2000).alpha(1f).withEndAction {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            onStart()
-            //finish()
+
+            val currentUser = auth.currentUser
+
+
+            if(currentUser != null  ){
+                val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser!!.uid)
+
+                usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+
+                        if (snapshot.getValue()==null) {
+                            val intent = Intent(this@SplashScreenActivity, CreateProfileActivity::class.java)
+
+                            startActivity(intent)
+                            finish()
+                        }
+                        else{
+                            updateUI()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+
+            else{
+                val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                startActivity(intent)
+                finish()
+            }
+
         }
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
         // FireBase App check token for debugging
         FirebaseApp.initializeApp(/*context=*/this)
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         firebaseAppCheck.installAppCheckProviderFactory(
             DebugAppCheckProviderFactory.getInstance()
         )
+
     }
 
-    public override fun onStart() {
-        super.onStart()
 
-        val currentUser = auth.currentUser
-
-
-        if(currentUser != null  ){
-            val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(currentUser!!.uid)
-
-            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    if (snapshot.getValue()==null) {
-                        val intent = Intent(this@SplashScreenActivity, CreateProfileActivity::class.java)
-                        finish()
-                        startActivity(intent)
-
-                    }
-                    else{
-                        updateUI()
-
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
-
-
-        }
-        else{
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-
-            finish()
-
-        }
-    }
     private fun updateUI() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
