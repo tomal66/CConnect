@@ -2,8 +2,6 @@ package com.tomal66.cconnect.Adapter
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.media.Image
-import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,18 +12,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.mazenrashed.MenuBottomSheet
-import com.squareup.picasso.Picasso
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Activities.MainActivity
 import com.tomal66.cconnect.Model.Post
@@ -41,6 +35,11 @@ class PostAdapter
 {
     val postBottomSheet = MenuBottomSheet.Builder()
         .setMenuRes(R.menu.post_menu)
+        .closeAfterSelect(true)
+        .build()
+
+    val myBottomSheet = MenuBottomSheet.Builder()
+        .setMenuRes(R.menu.my_menu)
         .closeAfterSelect(true)
         .build()
 
@@ -131,10 +130,32 @@ class PostAdapter
         })
 
         holder.postOptions.setOnClickListener(){
-            showPostBottomSheet(post.postedBy.toString())
+            if(post.postedBy.toString()==currentUser!!.uid)
+            {
+                showMyBottomSHeet(post)
+            }
+            else{
+                showPostBottomSheet(post.postedBy.toString())
+            }
+
         }
 
 
+    }
+
+    private fun showMyBottomSHeet(post: Post) {
+        myBottomSheet.show(mContext as MainActivity)
+        myBottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
+            when (id) {
+                R.id.bottomsheet_delete -> {
+                    var postRef = FirebaseDatabase.getInstance().getReference().child("Posts")
+                    postRef.child(post.pid.toString()).removeValue()
+
+                    var likeRef = FirebaseDatabase.getInstance().getReference().child("Likes")
+                    likeRef.child(post.pid.toString()).removeValue()
+                }
+            }
+        }
     }
 
     fun showPostBottomSheet(uid: String){
