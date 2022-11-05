@@ -49,7 +49,7 @@ class NotificationAdapter(private var mContext: Context,
 
         var image_profile : ImageView = itemView.findViewById(R.id.image_profile)
         var post_image : ImageView = itemView.findViewById(R.id.post_image)
-        var user_name : TextView = itemView.findViewById(R.id.username)
+        var user_name : TextView ?= itemView.findViewById(R.id.username)
         var text : TextView = itemView.findViewById(R.id.comment)
 
     }
@@ -75,24 +75,27 @@ class NotificationAdapter(private var mContext: Context,
         val postref = FirebaseStorage.getInstance().reference.child("Posts")
 
         val localFile1 = File.createTempFile("tempImage", "jpg")
-        postref.child("${noti.postid}").getFile(localFile).addOnSuccessListener {
+        postref.child("${noti.postid}").getFile(localFile1).addOnSuccessListener {
 
             val bitmap = BitmapFactory.decodeFile((localFile1.absolutePath))
             holder.post_image.setImageBitmap(bitmap)
+
         }.addOnFailureListener {
 
         }
         // liked text
-        holder.text.text = noti.text
+//        holder.text.text = noti.text
 
-        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(noti.userId)
+        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(noti.userId.toString())
 
         userRef.addValueEventListener(object : ValueEventListener{
+
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 val user1 = snapshot.getValue(User::class.java)
 
                 if (user1 != null) {
-                    holder.user_name.text = user1.firstname + " " + user1.lastname
+                    holder.text.text = user1.firstname + " " + user1.lastname + " " + noti.text
                 }
             }
 

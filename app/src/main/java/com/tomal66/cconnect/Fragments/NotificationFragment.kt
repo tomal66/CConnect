@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,8 @@ class NotificationFragment : Fragment() {
 
     private var notificationAdapter: NotificationAdapter? = null
     private var notificationList: MutableList<Notification>? = null
+
+    companion object val TAG = "aaa"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,18 +55,20 @@ class NotificationFragment : Fragment() {
     private fun checkNotification() {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
 
-        val notificationRef = FirebaseDatabase.getInstance().reference.child("Notification").child(currentUserID)
+        val notificationRef = FirebaseDatabase.getInstance().reference.child("Notifications").child(currentUserID)
 
         notificationRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 notificationList?.clear()
 
-                for (noti in snapshot.children)
+                for (notification in snapshot.children)
                 {
-                    val noti1 = noti.getValue(Notification::class.java)
+                    Log.d(TAG,notification.key!!)
+                    val noti1 = notification.getValue(Notification:: class.java)
 
                     noti1?.let { notificationList?.add(it) }
 
+                    notificationAdapter!!.notifyDataSetChanged()
                 }
             }
 

@@ -23,8 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.tomal66.cconnect.Activities.EditProfileActivity
-import com.tomal66.cconnect.Activities.MainActivity
+import com.tomal66.cconnect.Activities.*
 import com.tomal66.cconnect.Adapter.PostAdapter
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
@@ -182,46 +181,55 @@ class ProfileFragment : Fragment() {
 
     private fun getProfile() {
         getCurrentUser()
+
     }
 
     private fun getCurrentUser(){
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+
         val usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+
+
         if(currentUserID.isNotEmpty()){
             usersRef.child(currentUserID).addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
 
-                    user = snapshot.getValue(User::class.java)!!
-                    username.setText(user.username)
-                    fullname.setText(user.firstname + " " + user.lastname)
-                    bio.setText(user.bio)
-                    posts.setText(user.posts.toString())
-                    followers.setText(user.followers.toString())
-                    following.setText(user.following.toString())
-                    department.setText(user.department.toString())
-                    university.setText(user.institution.toString())
-                    city.setText(user.city + ", " + user.country)
-                    gender.setText(user.gender)
-                    dob.setText(user.dob)
-                    var res = user.interest?.let { TextUtils.join(", ", it) }
-                    interests.setText(res)
-                    storageReference = FirebaseStorage.getInstance().reference.child("Users/$currentUserID")
 
-                    val localFile = File.createTempFile("tempImage","jpg")
+                        snapshot.child(currentUserID)
 
-                    storageReference.getFile(localFile).addOnSuccessListener {
+                        user = snapshot.getValue(User::class.java)!!
+                        username.setText(user.username)
+                        fullname.setText(user.firstname + " " + user.lastname)
+                        bio.setText(user.bio)
+                        posts.setText(user.posts.toString())
+                        followers.setText(user.followers.toString())
+                        following.setText(user.following.toString())
+                        department.setText(user.department.toString())
+                        university.setText(user.institution.toString())
+                        city.setText(user.city + ", " + user.country)
+                        gender.setText(user.gender)
+                        dob.setText(user.dob)
 
-                        val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
-                        profileImage.setImageBitmap(bitmap)
+                        var res = user.interest?.let { TextUtils.join(", ", it) }
+                        interests.setText(res)
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("Users/$currentUserID")
+
+                        val localFile = File.createTempFile("tempImage", "jpg")
+
+                        storageReference.getFile(localFile).addOnSuccessListener {
+
+                            val bitmap = BitmapFactory.decodeFile((localFile.absolutePath))
+                            profileImage.setImageBitmap(bitmap)
 
 
-                    }.addOnFailureListener{
-                        Toast.makeText(activity,"Failed to retrieve image",Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener {
+                            Toast.makeText(activity, "Failed to retrieve image", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+
                     }
-
-
-
-                }
 
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
