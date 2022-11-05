@@ -145,7 +145,7 @@ class PostAdapter
                 showMyBottomSHeet(post)
             }
             else{
-                showPostBottomSheet(post.postedBy.toString())
+                showPostBottomSheet(post)
             }
 
         }
@@ -189,14 +189,18 @@ class PostAdapter
         }
     }
 
-    fun showPostBottomSheet(uid: String){
+    fun showPostBottomSheet(post: Post){
         postBottomSheet.show(mContext as MainActivity)
         postBottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
             when (id) {
                 R.id.bottomsheet_unfollow -> {
-                    unfollow(uid)
+                    unfollow(post.postedBy.toString())
                 }
-                R.id.bottomsheet_report -> Toast.makeText(mContext, "Post Reported", Toast.LENGTH_SHORT).show()
+                R.id.bottomsheet_report -> {
+                    FirebaseDatabase.getInstance().getReference().child("Reports").child("Posts")
+                        .child(post.pid.toString()).child("reportedBy").setValue(firebaseUser?.uid!!)
+                    Toast.makeText(mContext, "Post Reported", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

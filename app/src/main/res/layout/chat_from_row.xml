@@ -16,7 +16,7 @@
         android:background="@drawable/chat_bg_from"
         android:maxWidth="240dp"
         android:padding="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:text="This is my message"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
