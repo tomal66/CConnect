@@ -3,6 +3,7 @@ package com.tomal66.cconnect.Activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Fragments.ProfileFragment
 import com.tomal66.cconnect.R
 
@@ -21,6 +24,7 @@ class OptionsActivity : AppCompatActivity() {
     private lateinit var changePassword: RelativeLayout
     private lateinit var changeEmail: RelativeLayout
     private lateinit var visibility: RelativeLayout
+    private lateinit var deleteAccount: RelativeLayout
     private lateinit var privacy: RelativeLayout
     private lateinit var report: RelativeLayout
     private lateinit var logout: RelativeLayout
@@ -32,6 +36,7 @@ class OptionsActivity : AppCompatActivity() {
         back = findViewById(R.id.back)
         changePassword = findViewById(R.id.change_password)
         changeEmail = findViewById(R.id.change_email)
+        //deleteAccount = findViewById(R.id.delete_account)
         //visibility = findViewById(R.id.visibility)
         //privacy = findViewById(R.id.privacy)
         report = findViewById(R.id.report)
@@ -45,6 +50,10 @@ class OptionsActivity : AppCompatActivity() {
             changePasswordDialog()
         }
 
+//        deleteAccount.setOnClickListener(){
+//            deleteAccount()
+//        }
+
         back.setOnClickListener(){
             onBackPressed()
         }
@@ -57,6 +66,75 @@ class OptionsActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    fun deleteAccount(){
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_account, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setTitle("Delete Account")
+        val changeBtn: Button = mDialogView.findViewById(R.id.dltBtn)
+        val cancelBtn: Button = mDialogView.findViewById(R.id.cancelBtn)
+        val currPasswordET: EditText = mDialogView.findViewById(R.id.currPasswordET)
+        val confPasswordET: EditText = mDialogView.findViewById(R.id.confPasswordET)
+
+        val mAlertDialog = mBuilder.show()
+
+        changeBtn.setOnClickListener(){
+            mAlertDialog.dismiss()
+            val currentPassword = currPasswordET.text.toString().trim()
+            val confirmPassword = confPasswordET.text.toString().trim()
+            val user = Firebase.auth.currentUser
+
+            if(currentPassword.isEmpty() || confirmPassword.isEmpty())
+            {
+                Toast.makeText(this,"Fields are empty!", Toast.LENGTH_SHORT).show()
+            }
+            else if(currentPassword!=confirmPassword)
+            {
+                Toast.makeText(this,"Passwords don't match!", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                val credential = user?.email?.let { it1 ->
+                    EmailAuthProvider
+                        .getCredential(it1, currentPassword)
+                }
+                if (credential != null) {
+                    user.reauthenticate(credential)
+                        .addOnCompleteListener { task->
+                            if(task.isSuccessful)
+                            {
+                                val ref = FirebaseDatabase.getInstance().getReference()
+                                ref.child("Users").child(user.uid).removeValue()
+
+                                user.delete()
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            Log.d(TAG, "User account deleted.")
+                                        }
+                                    }
+                                Firebase.auth.signOut()
+
+
+
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+
+                            }
+                            else
+                            {
+                                Toast.makeText(this,"Wrong Password!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                }
+            }
+        }
+
+        cancelBtn.setOnClickListener(){
+            mAlertDialog.dismiss()
+        }
     }
 
     private fun changePasswordDialog() {
