@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -16,6 +17,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.tomal66.cconnect.Adapter.PostAdapter
+import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
 import java.io.File
@@ -79,6 +82,8 @@ class ProfileActivity : AppCompatActivity() {
     private var user : User? = null
     private lateinit var storageReference: StorageReference
     private lateinit var imageUri : Uri
+    private var postAdapter: PostAdapter? = null
+    private var postList: MutableList<Post>? = null
 
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
     var usersRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -116,6 +121,21 @@ class ProfileActivity : AppCompatActivity() {
         postsBtn.setOnClickListener(){
             aboutData.visibility = View.GONE
             recycler_view_posts.visibility = View.VISIBLE
+        }
+        var recyclerView: RecyclerView? = null
+        recyclerView = findViewById(R.id.recycler_view_posts)
+
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        recyclerView.layoutManager = linearLayoutManager
+
+        postList = ArrayList()
+        postAdapter = this?.let { PostAdapter(it,postList as ArrayList<Post>) }
+        recyclerView.adapter = postAdapter
+
+        if (uid != null) {
+            retrievePosts(uid)
         }
 
         followBtn.setOnClickListener(){
@@ -185,6 +205,34 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         }
+
+    }
+
+    private fun retrievePosts(uid: String) {
+        val postsRef = FirebaseDatabase.getInstance().reference
+            .child("Posts")
+
+        postsRef.addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                postList?.clear()
+
+                for (po in snapshot.children)
+                {
+                    val post = po.getValue(Post:: class.java)
+
+                    if (post != null) {
+                        if(post.postedBy.equals(uid)) {
+                            postList!!.add(post)
+                        }
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
 
     }
 

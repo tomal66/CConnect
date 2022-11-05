@@ -153,6 +153,18 @@ class PostAdapter
 
                     var likeRef = FirebaseDatabase.getInstance().getReference().child("Likes")
                     likeRef.child(post.pid.toString()).removeValue()
+
+                    postRef.orderByChild("postedBy").equalTo(post.postedBy).addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val ref = FirebaseDatabase.getInstance().getReference().child("Users").child(post.postedBy!!).child("posts")
+                            ref.setValue(snapshot.childrenCount.toInt())
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 }
             }
         }
