@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    public fun showBottomSheet(){
+    fun showBottomSheet(){
         bottomSheet.show(this)
         bottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
             when (id) {
