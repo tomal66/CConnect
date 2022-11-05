@@ -59,64 +59,103 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/postTitle"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:layout_margin="5dp"
-                android:hint="Title"
-                />
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="20dp"
+                app:cardUseCompatPadding="true">
 
-            <EditText
-                android:id="@+id/descriptionPost"
-                android:layout_width="match_parent"
-                android:layout_height="310dp"
-                android:layout_margin="5dp"
-                android:gravity="top"
-                android:hint="Want to say something?"
-                android:isScrollContainer="true"
-                android:inputType="textMultiLine"
-                android:maxLines="10" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <EditText
+                        android:id="@+id/postTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/background_forms"
+                        android:ems="1"
+                        android:hint="Title"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textColor="#1c1c1c"
+                        android:textColorHint="#65000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/descriptionPost"
+                        android:layout_width="match_parent"
+                        android:layout_height="310dp"
+
+                        android:background="@drawable/background_forms"
+                        android:ems="1"
+                        android:gravity="top"
+                        android:hint="What's happening?"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textColor="#1c1c1c"
+                        android:textColorHint="#65000000"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
 
             <ImageView
                 android:id="@+id/imagePost"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
                 android:layout_margin="5dp"
-                android:src="@drawable/default_user" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_add_photo" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
 
 
                 <ImageView
                     android:id="@+id/useCamera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginTop="5dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/ic_camera" />
 
                 <ImageView
                     android:id="@+id/useGallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginTop="5dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/ic_gallery" />
 
             </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -71,9 +71,10 @@ class SplashScreenActivity : AppCompatActivity() {
 
         }
         else{
-            val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
-            finish()
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+
+            finish()
 
         }
     }

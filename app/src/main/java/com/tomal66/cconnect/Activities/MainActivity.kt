@@ -19,6 +19,7 @@ import butterknife.ButterKnife
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.mazenrashed.MenuBottomSheet
 import com.tomal66.cconnect.*
@@ -82,6 +83,12 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+    }
+
+
+    fun unfollow(uid: String)
+    {
+        val ref = FirebaseDatabase.getInstance().getReference().child("Follow")
     }
 
     fun showBottomSheet(){
