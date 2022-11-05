@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -33,11 +34,17 @@ class AddPeopleActivity : AppCompatActivity() {
     private var mUser: MutableList<User>?= null
     private var mAuth = FirebaseAuth.getInstance()
     var usersRef = FirebaseDatabase.getInstance().getReference().child("Users")
+    var followRef = FirebaseDatabase.getInstance().getReference().child("Follow").child(FirebaseAuth.getInstance().currentUser!!.uid)
+        .child("Following")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_people)
         ButterKnife.bind(this)
+
+        backBtn.setOnClickListener(){
+            onBackPressed()
+        }
 
         recyclerview_add_people.setHasFixedSize(true)
         recyclerview_add_people.layoutManager = LinearLayoutManager(this)
@@ -57,9 +64,25 @@ class AddPeopleActivity : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             var user = snapshot.getValue(User::class.java)!!
                             if(mAuth.currentUser?.uid!= user.uid){
-                                mUser?.add(user)
-                                Log.d(TAG,postSnapshot.key.toString())
-                                addPeopleAdapter!!.notifyDataSetChanged()
+                                followRef.child(user.uid!!).addValueEventListener(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if(snapshot.exists())
+                                        {
+
+                                        }
+                                        else{
+                                            mUser?.add(user)
+                                            Log.d(TAG,postSnapshot.key.toString())
+                                            addPeopleAdapter!!.notifyDataSetChanged()
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
                             }
 
                         }

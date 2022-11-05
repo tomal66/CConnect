@@ -1,9 +1,8 @@
 package com.tomal66.cconnect.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
-import android.media.Image
-import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,21 +13,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.mazenrashed.MenuBottomSheet
-import com.squareup.picasso.Picasso
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Activities.MainActivity
 import com.tomal66.cconnect.Model.Notification
+import com.tomal66.cconnect.Activities.ProfileActivity
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
@@ -42,6 +38,11 @@ class PostAdapter
 {
     val postBottomSheet = MenuBottomSheet.Builder()
         .setMenuRes(R.menu.post_menu)
+        .closeAfterSelect(true)
+        .build()
+
+    val myBottomSheet = MenuBottomSheet.Builder()
+        .setMenuRes(R.menu.my_menu)
         .closeAfterSelect(true)
         .build()
 
@@ -61,7 +62,6 @@ class PostAdapter
         val currentUser = FirebaseAuth.getInstance().currentUser
         firebaseUser = FirebaseAuth.getInstance().currentUser
         holder.postImage.visibility = GONE
-
         val post = mPost[position]
 
         // post er chobi dekhabe
@@ -111,9 +111,8 @@ class PostAdapter
 
                     val user = snapshot.getValue(User::class.java)!!
 
-                    // user image positioning
-
                     val storageReference = FirebaseStorage.getInstance().reference.child("Users/${post.postedBy.toString()}")
+
 
                     val localFile = File.createTempFile("tempImage2","jpg")
 
@@ -140,10 +139,53 @@ class PostAdapter
         })
 
         holder.postOptions.setOnClickListener(){
-            showPostBottomSheet(post.postedBy.toString())
+            if(post.postedBy.toString()==currentUser!!.uid)
+            {
+                showMyBottomSHeet(post)
+            }
+            else{
+                showPostBottomSheet(post.postedBy.toString())
+            }
+
+        }
+        holder.userName?.setOnClickListener(){
+            if(currentUser!!.uid!=post.postedBy)
+            {
+                val intent = Intent(mContext, ProfileActivity::class.java)
+                intent.putExtra("uid", post.postedBy)
+                mContext.startActivity(intent)
+            }
+
         }
 
 
+    }
+
+    private fun showMyBottomSHeet(post: Post) {
+        myBottomSheet.show(mContext as MainActivity)
+        myBottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
+            when (id) {
+                R.id.bottomsheet_delete -> {
+                    var postRef = FirebaseDatabase.getInstance().getReference().child("Posts")
+                    postRef.child(post.pid.toString()).removeValue()
+
+                    var likeRef = FirebaseDatabase.getInstance().getReference().child("Likes")
+                    likeRef.child(post.pid.toString()).removeValue()
+
+                    postRef.orderByChild("postedBy").equalTo(post.postedBy).addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val ref = FirebaseDatabase.getInstance().getReference().child("Users").child(post.postedBy!!).child("posts")
+                            ref.setValue(snapshot.childrenCount.toInt())
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                }
+            }
+        }
     }
 
     fun showPostBottomSheet(uid: String){

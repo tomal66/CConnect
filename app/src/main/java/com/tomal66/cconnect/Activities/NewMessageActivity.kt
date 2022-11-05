@@ -2,6 +2,7 @@ package com.tomal66.cconnect.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +29,10 @@ class NewMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
+        var backBtn: ImageView = findViewById(R.id.back)
+        backBtn.setOnClickListener(){
+            onBackPressed()
+        }
 
         supportActionBar?.title = "Select User"
         recyclerview_NewMessage = findViewById(R.id.recyclerview_NewMessage)

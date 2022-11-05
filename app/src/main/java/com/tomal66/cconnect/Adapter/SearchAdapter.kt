@@ -1,5 +1,6 @@
 package com.tomal66.cconnect.Adapter
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +44,18 @@ class SearchAdapter(private var mContext: Context,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = userList[position]
+        holder.progressBar.progress = 0
+        holder.progressBar.max = 72
+        var matchscore: Int = 0
+        var ref = FirebaseDatabase.getInstance().getReference().child("Compitability").child(firebaseUser!!.uid)
+        ref.child(user.uid!!).get().addOnSuccessListener {
+            matchscore = (it.value as Long).toInt()
+            ObjectAnimator.ofInt(holder.progressBar, "progress", 72-matchscore)
+                .setDuration(500)
+                .start()
+        }
+
+
         var storageReference: StorageReference = FirebaseStorage.getInstance().reference.child("Users/${user.uid}")
 
         val localFile = File.createTempFile("tempImage","jpg")
@@ -216,6 +230,7 @@ class SearchAdapter(private var mContext: Context,
         var city : TextView = itemView.findViewById(R.id.city)
         var followBtn : Chip = itemView.findViewById(R.id.followBtn)
         var layout : LinearLayout = itemView.findViewById(R.id.user_item)
+        var progressBar: ProgressBar = itemView.findViewById(R.id.match_progress)
 
 
     }

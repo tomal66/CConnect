@@ -156,6 +156,18 @@ class AddPostActivity : AppCompatActivity() {
 
                 }
                 postRef.child(postID.toString()).setValue(post)
+                postRef.orderByChild("postedBy").equalTo(post.postedBy).addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val ref = FirebaseDatabase.getInstance().getReference().child("Users").child(post.postedBy!!).child("posts")
+                        ref.setValue(snapshot.childrenCount.toInt())
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                })
+
 
             }
             else{

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp">
+    android:layout_height="118dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +20,7 @@
             android:id="@+id/container">
 
             <LinearLayout
+                android:id="@+id/kisuekta"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
@@ -50,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:maxWidth="200dp"
+                    android:maxWidth="190dp"
                     android:text="Dept/Univ"
                     android:textColor="#8A8A8A"
                     android:textSize="12dp" />
@@ -63,6 +64,7 @@
                     android:text="City"
                     android:textColor="#8A8A8A"
                     android:textSize="15dp" />
+
             </LinearLayout>
 
             <RelativeLayout
@@ -96,8 +98,21 @@
 
             </RelativeLayout>
 
+            <ProgressBar
+                android:layout_alignParentBottom="true"
+                android:id="@+id/match_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+
+                android:layout_marginRight="5dp"
+                android:progressDrawable="@drawable/progress_bg" />
+
         </RelativeLayout>
+
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
