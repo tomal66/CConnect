@@ -85,7 +85,6 @@ class AddPeopleAdapter (private var mContext: Context,
 
 
         holder.followBtn.setOnClickListener(){
-            removeAt(position)
             if(holder.followBtn.text.toString() == "Follow")
             {
                 firebaseUser?.uid.let { it1 ->
@@ -104,10 +103,33 @@ class AddPeopleAdapter (private var mContext: Context,
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers = user.followers?.plus(1)
-                                                currUser.following = currUser.following?.plus(1)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
+                                                val ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser?.uid.toString())
+                                                    .child("Following")
+                                                ref1.addValueEventListener(object: ValueEventListener{
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid.toString())
+                                                            .child("following").setValue(snapshot.childrenCount.toInt())
+                                                    }
+
+                                                    override fun onCancelled(error: DatabaseError) {
+
+                                                    }
+
+                                                })
+
+                                                val ref2 = FirebaseDatabase.getInstance().getReference().child("Follow").child(user.uid.toString())
+                                                    .child("Followers")
+                                                ref2.addValueEventListener(object: ValueEventListener{
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString())
+                                                            .child("followers").setValue(snapshot.childrenCount.toInt())
+                                                    }
+
+                                                    override fun onCancelled(error: DatabaseError) {
+
+                                                    }
+
+                                                })
                                             }
 
                                         }
@@ -136,10 +158,36 @@ class AddPeopleAdapter (private var mContext: Context,
 
                                             if(task.isSuccessful)
                                             {
-                                                user.followers = user.followers?.minus(1)
-                                                currUser.following = currUser.following?.minus(1)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString()).setValue(user)
-                                                FirebaseDatabase.getInstance().getReference("Users").child(currUser.uid.toString()).setValue(currUser)
+                                                if(task.isSuccessful)
+                                                {
+                                                    val ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser?.uid.toString())
+                                                        .child("Following")
+                                                    ref1.addValueEventListener(object: ValueEventListener{
+                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                            FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid.toString())
+                                                                .child("following").setValue(snapshot.childrenCount.toInt())
+                                                        }
+
+                                                        override fun onCancelled(error: DatabaseError) {
+
+                                                        }
+
+                                                    })
+
+                                                    val ref2 = FirebaseDatabase.getInstance().getReference().child("Follow").child(user.uid.toString())
+                                                        .child("Followers")
+                                                    ref2.addValueEventListener(object: ValueEventListener{
+                                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                                            FirebaseDatabase.getInstance().getReference("Users").child(user.uid.toString())
+                                                                .child("followers").setValue(snapshot.childrenCount.toInt())
+                                                        }
+
+                                                        override fun onCancelled(error: DatabaseError) {
+
+                                                        }
+
+                                                    })
+                                                }
                                             }
 
                                         }

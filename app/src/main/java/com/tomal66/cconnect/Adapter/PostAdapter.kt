@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.disklrucache.DiskLruCache.Value
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -23,8 +24,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.mazenrashed.MenuBottomSheet
 import com.squareup.picasso.Picasso
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
+import com.tomal66.cconnect.Activities.MainActivity
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
@@ -36,6 +39,11 @@ class PostAdapter
     (private val mContext: Context,
      private val mPost: List<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>()
 {
+    val postBottomSheet = MenuBottomSheet.Builder()
+        .setMenuRes(R.menu.post_menu)
+        .closeAfterSelect(true)
+        .build()
+
     private var firebaseUser : FirebaseUser? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -122,8 +130,78 @@ class PostAdapter
             }
         })
 
+        holder.postOptions.setOnClickListener(){
+            showPostBottomSheet(post.postedBy.toString())
+        }
+
+
     }
 
+    fun showPostBottomSheet(uid: String){
+        postBottomSheet.show(mContext as MainActivity)
+        postBottomSheet.onSelectMenuItemListener = { position: Int, id: Int? ->
+            when (id) {
+                R.id.bottomsheet_unfollow -> {
+                    unfollow(uid)
+                }
+                R.id.bottomsheet_report -> Toast.makeText(mContext, "Post Reported", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun unfollow(uid: String) {
+        firebaseUser?.uid.let { it1 ->
+            FirebaseDatabase.getInstance().getReference()
+                .child("Follow").child(it1.toString())
+                .child("Following").child(uid)
+                .removeValue().addOnCompleteListener(){ task->
+
+                    if(task.isSuccessful)
+                    {
+                        firebaseUser?.uid.let { it1 ->
+                            FirebaseDatabase.getInstance().getReference()
+                                .child("Follow").child(uid)
+                                .child("Followers").child(it1.toString())
+                                .removeValue().addOnCompleteListener(){ task->
+
+                                    if(task.isSuccessful)
+                                    {
+                                        val ref1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser?.uid.toString())
+                                            .child("Following")
+                                        ref1.addValueEventListener(object: ValueEventListener{
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid.toString())
+                                                    .child("following").setValue(snapshot.childrenCount.toInt())
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+
+                                            }
+
+                                        })
+
+                                        val ref2 = FirebaseDatabase.getInstance().getReference().child("Follow").child(uid)
+                                            .child("Followers")
+                                        ref2.addValueEventListener(object: ValueEventListener{
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                FirebaseDatabase.getInstance().getReference("Users").child(uid)
+                                                    .child("followers").setValue(snapshot.childrenCount.toInt())
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+
+                                            }
+
+                                        })
+                                    }
+
+                                }
+                        }
+                    }
+
+                }
+        }
+    }
 
 
     inner class ViewHolder(@NotNull itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -131,7 +209,7 @@ class PostAdapter
         var profileImage : CircleImageView? = itemView.findViewById(R.id.user_Image)
         var postImage : ImageView = itemView.findViewById(R.id.postImage)
         var likeBtn: ImageView = itemView.findViewById(R.id.likeBtn)
-        var threeDot: ImageView = itemView.findViewById(R.id.threeDot)
+        var postOptions: ImageView = itemView.findViewById(R.id.post_options)
         var userName: TextView ?= itemView.findViewById(R.id.userName)
         var postTitle: TextView = itemView.findViewById(R.id.postTitle)
         var postDescription: TextView = itemView.findViewById(R.id.postDescription)

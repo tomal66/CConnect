@@ -67,6 +67,7 @@ class SplashScreenActivity : AppCompatActivity() {
         firebaseAppCheck.installAppCheckProviderFactory(
             DebugAppCheckProviderFactory.getInstance()
         )
+
     }
 
 
