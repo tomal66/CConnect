@@ -115,62 +115,6 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/visibility"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/nav_visibility"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_visibility" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/nav_visibility"
-                android:text="Visibility"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/privacy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-
-            <ImageView
-                android:id="@+id/nav_privacy"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_privacy" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/nav_privacy"
-                android:text="Privacy"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height=".5dp"

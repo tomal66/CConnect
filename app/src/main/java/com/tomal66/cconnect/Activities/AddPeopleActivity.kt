@@ -42,6 +42,10 @@ class AddPeopleActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_people)
         ButterKnife.bind(this)
 
+        backBtn.setOnClickListener(){
+            onBackPressed()
+        }
+
         recyclerview_add_people.setHasFixedSize(true)
         recyclerview_add_people.layoutManager = LinearLayoutManager(this)
         mUser = ArrayList()

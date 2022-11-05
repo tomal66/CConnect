@@ -32,8 +32,8 @@ class OptionsActivity : AppCompatActivity() {
         back = findViewById(R.id.back)
         changePassword = findViewById(R.id.change_password)
         changeEmail = findViewById(R.id.change_email)
-        visibility = findViewById(R.id.visibility)
-        privacy = findViewById(R.id.privacy)
+        //visibility = findViewById(R.id.visibility)
+        //privacy = findViewById(R.id.privacy)
         report = findViewById(R.id.report)
         logout = findViewById(R.id.logout)
 
@@ -46,9 +46,7 @@ class OptionsActivity : AppCompatActivity() {
         }
 
         back.setOnClickListener(){
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
 
         logout.setOnClickListener(){
@@ -65,7 +63,7 @@ class OptionsActivity : AppCompatActivity() {
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.dialog_change_password, null)
         val mBuilder = AlertDialog.Builder(this)
             .setView(mDialogView)
-            .setTitle("Change Email")
+            .setTitle("Change Password")
         val changeBtn: Button = mDialogView.findViewById(R.id.changeBtn)
         val cancelBtn: Button = mDialogView.findViewById(R.id.cancelBtn)
         val currPasswordET: EditText = mDialogView.findViewById(R.id.currPasswordET)
