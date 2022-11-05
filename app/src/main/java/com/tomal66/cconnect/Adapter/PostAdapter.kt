@@ -1,6 +1,7 @@
 package com.tomal66.cconnect.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.mazenrashed.MenuBottomSheet
 import com.tomal66.cconnect.Activities.AddPeopleActivity.Companion.TAG
 import com.tomal66.cconnect.Activities.MainActivity
+import com.tomal66.cconnect.Activities.ProfileActivity
 import com.tomal66.cconnect.Model.Post
 import com.tomal66.cconnect.Model.User
 import com.tomal66.cconnect.R
@@ -136,6 +138,15 @@ class PostAdapter
             }
             else{
                 showPostBottomSheet(post.postedBy.toString())
+            }
+
+        }
+        holder.userName?.setOnClickListener(){
+            if(currentUser!!.uid!=post.postedBy)
+            {
+                val intent = Intent(mContext, ProfileActivity::class.java)
+                intent.putExtra("uid", post.postedBy)
+                mContext.startActivity(intent)
             }
 
         }
