@@ -132,7 +132,7 @@ class AddPostActivity : AppCompatActivity() {
         if(currentUserID.isNotEmpty()) {
             val postRef = FirebaseDatabase.getInstance().getReference("Posts")
 
-            if(binding.postTitle.toString().isNotEmpty() && binding.descriptionPost.toString().isNotEmpty())
+            if(binding.postTitle.editableText.toString().isNotEmpty() && binding.descriptionPost.editableText.toString().isNotEmpty())
             {
                 var time  = Date().toString()
                 val postID = postRef.push().key
